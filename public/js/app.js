@@ -18523,6 +18523,7 @@ __webpack_require__.r(__webpack_exports__);
       processing: false,
       item: null,
       filters: {
+        name: null,
         email: null,
         onlyTrashed: false
       }
@@ -18537,6 +18538,7 @@ __webpack_require__.r(__webpack_exports__);
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_10__.Inertia.reload({
         only: ["users"],
         data: {
+          name: this.filters.name,
           email: this.filters.email,
           onlyTrashed: this.filters.onlyTrashed
         }
@@ -18544,12 +18546,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     clear: function clear() {
       this.filters = {
+        name: null,
         email: null,
         onlyTrashed: false
       };
       this.refresh();
     },
-    ban: function ban() {
+    destroy: function destroy() {
       var _this = this;
 
       this.processing = true;
@@ -18561,7 +18564,25 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {//
       })["finally"](function () {
+        _this.processing = false;
+
         _this.closeModal();
+      });
+    },
+    restore: function restore(item) {
+      var _this2 = this;
+
+      this.processing = true;
+      this.item = item;
+      axios.get(route("manager.users.restore", {
+        user: this.item
+      })).then(function (response) {
+        _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_10__.Inertia.reload({
+          only: ["users"]
+        });
+      })["catch"](function (error) {//
+      })["finally"](function () {
+        _this2.processing = false;
       });
     },
     closeModal: function closeModal() {
@@ -21057,7 +21078,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   focusable: "false",
   "data-prefix": "fas",
   "data-icon": "search",
-  "class": "w-8 h-8 text-blue-400",
+  "class": "w-10 h-10 p-2 text-blue-400",
   role: "img",
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 512 512"
@@ -21073,7 +21094,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   focusable: "false",
   "data-prefix": "fas",
   "data-icon": "times",
-  "class": "w-8 h-8 text-red-400",
+  "class": "w-8 h-8 p-2 text-red-400",
   role: "img",
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 512 512"
@@ -21113,27 +21134,43 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
   "aria-hidden": "true",
   focusable: "false",
   "data-prefix": "fas",
-  "data-icon": "ban",
-  "class": "w-8 h-8 text-red-400",
+  "data-icon": "unban",
+  "class": "w-8 h-8 text-green-400",
   role: "img",
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 512 512"
+  viewBox: "0 0 640 512"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
   fill: "currentColor",
-  d: "M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
+  d: "M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4zm323-128.4l-27.8-28.1c-4.6-4.7-12.1-4.7-16.8-.1l-104.8 104-45.5-45.8c-4.6-4.7-12.1-4.7-16.8-.1l-28.1 27.9c-4.7 4.6-4.7 12.1-.1 16.8l81.7 82.3c4.6 4.7 12.1 4.7 16.8.1l141.3-140.2c4.6-4.7 4.7-12.2.1-16.8z"
 })], -1
 /* HOISTED */
 );
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ban User ");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
+  "aria-hidden": "true",
+  focusable: "false",
+  "data-prefix": "fas",
+  "data-icon": "ban",
+  "class": "w-8 h-8 text-red-400",
+  role: "img",
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 640 512"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
+  fill: "currentColor",
+  d: "M224 256A128 128 0 1 0 96 128a128 128 0 0 0 128 128zm96 64a63.08 63.08 0 0 1 8.1-30.5c-4.8-.5-9.5-1.5-14.5-1.5h-16.7a174.08 174.08 0 0 1-145.8 0h-16.7A134.43 134.43 0 0 0 0 422.4V464a48 48 0 0 0 48 48h280.9a63.54 63.54 0 0 1-8.9-32zm288-32h-32v-80a80 80 0 0 0-160 0v80h-32a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V320a32 32 0 0 0-32-32zM496 432a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm32-144h-64v-80a32 32 0 0 1 64 0z"
+})], -1
+/* HOISTED */
+);
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Are you sure you would like to ban user ");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ban User ");
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Are you sure you would like to ban user ");
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Close ");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? ");
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ban ");
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Close ");
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ban ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_checkbox = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-checkbox");
@@ -21170,25 +21207,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    name: "name",
+    id: "name",
+    type: "text",
+    "class": "m-2 mt-1 block w-full",
+    placeholder: "Name...",
+    modelValue: $data.filters.name,
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.filters.name = $event;
+    })
+  }, null, 8
+  /* PROPS */
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     name: "email",
     id: "email",
     type: "text",
-    "class": "mt-1 block w-full",
-    placeholder: "email...",
+    "class": "m-2 mt-1 block w-full",
+    placeholder: "Email...",
     modelValue: $data.filters.email,
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.filters.email = $event;
     })
   }, null, 8
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[3] || (_cache[3] = function ($event) {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return $options.refresh();
     }),
     title: "Go",
     "class": "hover:bg-red-100"
   }, [_hoisted_4]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.clear();
     }),
     title: "Clear",
@@ -21203,15 +21252,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.email), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [$data.filters.onlyTrashed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+      key: 0,
+      onClick: function onClick($event) {
+        return $options.restore(item);
+      },
+      title: "Unban",
+      "class": "hover:bg-red-100"
+    }, [_hoisted_10], 8
+    /* PROPS */
+    , ["onClick"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+      key: 1,
       onClick: function onClick($event) {
         return $options.confirmBan(item);
       },
       title: "Ban",
       "class": "hover:bg-red-100"
-    }, [_hoisted_10], 8
+    }, [_hoisted_11], 8
     /* PROPS */
-    , ["onClick"])])]);
+    , ["onClick"]))])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
@@ -21224,21 +21283,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClose: $options.closeModal
   }, {
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_11];
+      return [_hoisted_12];
     }),
     content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.item.name) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.item.email), 1
+      return [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.item.name) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.item.email), 1
       /* TEXT */
-      ), _hoisted_13];
+      ), _hoisted_14];
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-        onClick: _cache[5] || (_cache[5] = function ($event) {
+        onClick: _cache[6] || (_cache[6] = function ($event) {
           return $data.confirmingBan = false;
         })
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_14];
+          return [_hoisted_15];
         }),
         _: 1
         /* STABLE */
@@ -21247,11 +21306,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": ["ml-2", {
           'opacity-25': $data.processing
         }],
-        onClick: $options.ban,
+        onClick: $options.destroy,
         disabled: $data.processing
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_15];
+          return [_hoisted_16];
         }),
         _: 1
         /* STABLE */

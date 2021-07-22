@@ -24,6 +24,10 @@ class UsersController extends Controller
             $query->onlyTrashed();
         }
 
+        if ($request->name) {
+            $query->where('name', $request->name);
+        }
+
         if ($request->email) {
             $query->where('email', $request->email);
         }
@@ -35,9 +39,31 @@ class UsersController extends Controller
         ]);
     }
 
+    /**
+     * Destroy a user
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
     public function destroy(User $user)
     {
         $user->delete();
+        return response('ok');
+    }
+
+    /**
+     * Restore a user
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param int $user_id
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function restore(int $user_id)
+    {
+        User::onlyTrashed()->find($user_id)->restore();
         return response('ok');
     }
 }

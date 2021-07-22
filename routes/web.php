@@ -34,4 +34,5 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified'
     })->name('manager');
     Route::get('/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('manager.users');
     Route::get('/users/{user}/destroy', [\App\Http\Controllers\UsersController::class, 'destroy'])->name('manager.users.destroy');
+    Route::get('/users/{user}/restore', [\App\Http\Controllers\UsersController::class, 'restore'])->name('manager.users.restore');
 });

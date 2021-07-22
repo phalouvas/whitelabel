@@ -13,11 +13,19 @@
         </div>
       </jet-label>
       <jet-input
+        name="name"
+        id="name"
+        type="text"
+        class="m-2 mt-1 block w-full"
+        placeholder="Name..."
+        v-model="filters.name"
+      />
+      <jet-input
         name="email"
         id="email"
         type="text"
-        class="mt-1 block w-full"
-        placeholder="email..."
+        class="m-2 mt-1 block w-full"
+        placeholder="Email..."
         v-model="filters.email"
       />
       <button @click="refresh()" title="Go" class="hover:bg-red-100">
@@ -26,7 +34,7 @@
           focusable="false"
           data-prefix="fas"
           data-icon="search"
-          class="w-8 h-8 text-blue-400"
+          class="w-10 h-10 p-2 text-blue-400"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -43,7 +51,7 @@
           focusable="false"
           data-prefix="fas"
           data-icon="times"
-          class="w-8 h-8 text-red-400"
+          class="w-8 h-8 p-2 text-red-400"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -77,6 +85,29 @@
             <td>{{ item.email }}</td>
             <td>
               <button
+                v-if="filters.onlyTrashed"
+                @click="restore(item)"
+                title="Unban"
+                class="hover:bg-red-100"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="unban"
+                  class="w-8 h-8 text-green-400"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4zm323-128.4l-27.8-28.1c-4.6-4.7-12.1-4.7-16.8-.1l-104.8 104-45.5-45.8c-4.6-4.7-12.1-4.7-16.8-.1l-28.1 27.9c-4.7 4.6-4.7 12.1-.1 16.8l81.7 82.3c4.6 4.7 12.1 4.7 16.8.1l141.3-140.2c4.6-4.7 4.7-12.2.1-16.8z"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                v-else
                 @click="confirmBan(item)"
                 title="Ban"
                 class="hover:bg-red-100"
@@ -89,11 +120,11 @@
                   class="w-8 h-8 text-red-400"
                   role="img"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
+                  viewBox="0 0 640 512"
                 >
                   <path
                     fill="currentColor"
-                    d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
+                    d="M224 256A128 128 0 1 0 96 128a128 128 0 0 0 128 128zm96 64a63.08 63.08 0 0 1 8.1-30.5c-4.8-.5-9.5-1.5-14.5-1.5h-16.7a174.08 174.08 0 0 1-145.8 0h-16.7A134.43 134.43 0 0 0 0 422.4V464a48 48 0 0 0 48 48h280.9a63.54 63.54 0 0 1-8.9-32zm288-32h-32v-80a80 80 0 0 0-160 0v80h-32a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V320a32 32 0 0 0-32-32zM496 432a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm32-144h-64v-80a32 32 0 0 1 64 0z"
                   ></path>
                 </svg>
               </button>
@@ -121,7 +152,7 @@
 
         <jet-danger-button
           class="ml-2"
-          @click="ban"
+          @click="destroy"
           :class="{ 'opacity-25': processing }"
           :disabled="processing"
         >
@@ -165,6 +196,7 @@ export default {
       processing: false,
       item: null,
       filters: {
+          name: null,
         email: null,
         onlyTrashed: false,
       },
@@ -181,21 +213,23 @@ export default {
       Inertia.reload({
         only: ["users"],
         data: {
-            email: this.filters.email,
-            onlyTrashed: this.filters.onlyTrashed
-            },
+          name: this.filters.name,
+          email: this.filters.email,
+          onlyTrashed: this.filters.onlyTrashed,
+        },
       });
     },
 
     clear() {
       this.filters = {
+          name: null,
         email: null,
         onlyTrashed: false,
       };
       this.refresh();
     },
 
-    ban() {
+    destroy() {
       this.processing = true;
 
       axios
@@ -211,7 +245,29 @@ export default {
           //
         })
         .finally(() => {
+          this.processing = false;
           this.closeModal();
+        });
+    },
+
+    restore(item) {
+      this.processing = true;
+      this.item = item;
+
+      axios
+        .get(
+          route("manager.users.restore", {
+            user: this.item,
+          })
+        )
+        .then((response) => {
+          Inertia.reload({ only: ["users"] });
+        })
+        .catch((error) => {
+          //
+        })
+        .finally(() => {
+          this.processing = false;
         });
     },
 
