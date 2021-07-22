@@ -100,8 +100,8 @@
 
                                     <template #content>
 
-                                        <jet-dropdown-link :href="route('manager')" v-if="$page.props.user.id == 1">
-                                            Manager Dashboard
+                                        <jet-dropdown-link :href="route('dashboard')" v-if="$page.props.user.id == 1">
+                                            Dashboard
                                         </jet-dropdown-link>
 
                                         <!-- Account Management -->

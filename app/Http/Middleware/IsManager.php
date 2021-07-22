@@ -7,7 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
 
-class IsOwner
+class IsManager
 {
     /**
      * Handle an incoming request.

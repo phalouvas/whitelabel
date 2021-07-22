@@ -28,6 +28,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified', 'owner'])->get('/xxx', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified', 'manager']], function () {
+    Route::get('/manager', function () {
+        return Inertia::render('Manager');
+    })->name('manager');
+});

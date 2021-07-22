@@ -1174,9 +1174,6 @@ select {
 .-mt-px {
 	margin-top: -1px;
 }
-.mb-auto {
-	margin-bottom: auto;
-}
 .block {
 	display: block;
 }
@@ -1185,9 +1182,6 @@ select {
 }
 .inline-flex {
 	display: inline-flex;
-}
-.table {
-	display: table;
 }
 .grid {
 	display: grid;
