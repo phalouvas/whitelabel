@@ -29,7 +29,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified', 'manager']], function () {
-    Route::get('/manager', function () {
+    Route::get('/', function () {
         return Inertia::render('Manager');
     })->name('manager');
+    Route::get('/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('manager.users');
+    Route::get('/users/{user}/destroy', [\App\Http\Controllers\UsersController::class, 'destroy'])->name('manager.users.destroy');
 });

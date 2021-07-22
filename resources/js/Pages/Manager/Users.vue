@@ -2,14 +2,14 @@
     <manager-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                Users
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <welcome />
+                    <users />
                 </div>
             </div>
         </div>
@@ -18,12 +18,12 @@
 
 <script>
     import ManagerLayout from '@/Layouts/ManagerLayout'
-    import Welcome from '@/Jetstream/Manager/Welcome'
+    import Users from '@/Jetstream/Manager/Users'
 
     export default {
         components: {
             ManagerLayout,
-            Welcome,
+            Users,
         },
     }
 </script>
