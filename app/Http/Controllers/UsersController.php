@@ -24,6 +24,10 @@ class UsersController extends Controller
             $query->onlyTrashed();
         }
 
+        if ($request->email) {
+            $query->where('email', $request->email);
+        }
+
         $users = $query->orderBy('id', 'desc')->paginate();
 
         return Inertia::render('Manager/Users', [

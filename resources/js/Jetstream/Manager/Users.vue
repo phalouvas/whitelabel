@@ -1,12 +1,59 @@
 <template>
   <div>
-    <div class="mt-4 p-6">
-      <jet-label for="terms">
+    <div class="mt-4 p-6 bg-grey align-middle justify-content-center flex">
+      <jet-label for="onlyTrashed">
         <div class="flex items-center">
-          <jet-checkbox name="onlyTrashed" id="onlyTrashed"  v-model:checked="filters.onlyTrashed" @change="refresh"/>
+          <jet-checkbox
+            name="onlyTrashed"
+            id="onlyTrashed"
+            v-model:checked="filters.onlyTrashed"
+            @change="refresh"
+          />
           <div class="ml-2">Show Banned</div>
         </div>
       </jet-label>
+      <jet-input
+        name="email"
+        id="email"
+        type="text"
+        class="mt-1 block w-full"
+        placeholder="email..."
+        v-model="filters.email"
+      />
+      <button @click="refresh()" title="Go" class="hover:bg-red-100">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="search"
+          class="w-8 h-8 text-blue-400"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        >
+          <path
+            fill="currentColor"
+            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+          ></path>
+        </svg>
+      </button>
+      <button @click="clear()" title="Clear" class="hover:bg-red-100">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="times"
+          class="w-8 h-8 text-red-400"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        >
+          <path
+            fill="currentColor"
+            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+          ></path>
+        </svg>
+      </button>
     </div>
 
     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
@@ -92,8 +139,9 @@ import JetButton from "@/Jetstream/Button";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal";
 import JetDangerButton from "@/Jetstream/DangerButton";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import JetPrimaryButton from "@/Jetstream/PrimaryButton";
 import JetCheckbox from "@/Jetstream/Checkbox";
-import JetToggle from "@/Jetstream/Toggle";
+import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
 import { Inertia } from "@inertiajs/inertia";
 
@@ -104,9 +152,11 @@ export default {
     JetButton,
     JetDangerButton,
     JetSecondaryButton,
+    JetPrimaryButton,
     JetConfirmationModal,
-    JetToggle, JetCheckbox,
+    JetCheckbox,
     JetLabel,
+    JetInput,
   },
 
   data() {
@@ -115,6 +165,7 @@ export default {
       processing: false,
       item: null,
       filters: {
+        email: null,
         onlyTrashed: false,
       },
     };
@@ -128,16 +179,20 @@ export default {
 
     refresh() {
       Inertia.reload({
-          only: ["users"],
-          data: {onlyTrashed: this.filters.onlyTrashed},
-          });
+        only: ["users"],
+        data: {
+            email: this.filters.email,
+            onlyTrashed: this.filters.onlyTrashed
+            },
+      });
     },
 
     clear() {
       this.filters = {
+        email: null,
         onlyTrashed: false,
       };
-      this.load();
+      this.refresh();
     },
 
     ban() {
