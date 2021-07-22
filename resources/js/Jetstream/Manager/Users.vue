@@ -2,7 +2,7 @@
   <div>
     <div class="mt-4 p-6 bg-grey align-middle justify-content-center flex">
       <jet-label for="onlyTrashed">
-        <div class="flex items-center">
+        <div class="flex items-center w-full">
           <jet-checkbox
             name="onlyTrashed"
             id="onlyTrashed"
@@ -172,6 +172,7 @@ import JetDangerButton from "@/Jetstream/DangerButton";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetPrimaryButton from "@/Jetstream/PrimaryButton";
 import JetCheckbox from "@/Jetstream/Checkbox";
+import JetToggle from "@/Jetstream/Toggle";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
 import { Inertia } from "@inertiajs/inertia";
@@ -185,7 +186,7 @@ export default {
     JetSecondaryButton,
     JetPrimaryButton,
     JetConfirmationModal,
-    JetCheckbox,
+    JetCheckbox, JetToggle,
     JetLabel,
     JetInput,
   },
