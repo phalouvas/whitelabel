@@ -21,8 +21,17 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "postcss-import": "^12.0.1",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "^1.35.2",
+        "sass-loader": "^12.1.0",
         "tailwindcss": "^2.0.1",
         "vue": "^3.0.5",
         "vue-loader": "^16.1.2"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
+        "@tiptap/starter-kit": "^2.0.0-beta.82",
+        "@tiptap/vue-3": "^2.0.0-beta.45",
+        "vue-quill-editor": "^3.0.6"
     }
 }

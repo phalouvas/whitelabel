@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class SettingsController extends Controller
 {
@@ -25,5 +26,23 @@ class SettingsController extends Controller
                 'welcome' => $settings->where('name', 'Welcome')->first()->value
             ],
         ]);
+    }
+
+    /**
+     * Validate and update the given data.
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param  array  $input
+     * @return void
+     */
+    public function update(Request $request) {
+
+        Validator::make($request->all(), [
+            'welcome' => ['required', 'string'],
+        ])->validateWithBag('updateProfileInformation');
+
+        Settings::where('name', 'Welcome')->update(['value' => $request->welcome]);
+        return response('ok');
     }
 }

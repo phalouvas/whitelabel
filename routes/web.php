@@ -39,5 +39,6 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified'
     });
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [\App\Http\Controllers\Manager\SettingsController::class, 'edit'])->name('manager.settings.edit');
+        Route::put('/update', [\App\Http\Controllers\Manager\SettingsController::class, 'update'])->name('manager.settings.update');
     });
 });

@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section @submitted="updateSettings" class="p-6">
+    <jet-form-section class="p-6">
 
         <template #title>
             Site Information
@@ -14,7 +14,7 @@
             <!-- Welcome -->
             <div class="col-span-6 sm:col-span-12">
                 <jet-label for="welcome" value="Welcome" />
-                <jet-input id="welcome" type="text" class="mt-1 block w-full" v-model="form.welcome" autocomplete="welcome" />
+                <jet-editor id="welcome" class="mt-1 w-full" v-model="form.welcome"/>
             </div>
                 <jet-input-error :message="form.errors.welcome" class="mt-2" />
 
@@ -25,7 +25,7 @@
                 Saved.
             </jet-action-message>
 
-            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="updateSettings">
                 Save
             </jet-button>
         </template>
@@ -40,6 +40,7 @@
     import JetLabel from '@/Jetstream/Label'
     import JetActionMessage from '@/Jetstream/ActionMessage'
     import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+    import JetEditor from '@/Jetstream/Editor'
 
     export default {
         components: {
@@ -50,6 +51,7 @@
             JetInputError,
             JetLabel,
             JetSecondaryButton,
+            JetEditor
         },
 
         data() {
@@ -64,11 +66,8 @@
 
         methods: {
             updateSettings() {
-                if (this.$refs.photo) {
-                    this.form.photo = this.$refs.photo.files[0]
-                }
-
-                this.form.post(route('user-profile-information.update'), {
+                return;
+                this.form.post(route('manager.settings.update'), {
                     errorBag: 'updateSettings',
                     preserveScroll: true,
                     onSuccess: () => (this.clearPhotoFileInput()),
