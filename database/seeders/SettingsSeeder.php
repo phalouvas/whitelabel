@@ -15,8 +15,8 @@ class SettingsSeeder extends Seeder
     public function run()
     {
         $now = date('Y-m-d H:i:s');
-        $data = [
-            0 => [
+        $data = [];
+        $data[] = [
                 'name' => 'Welcome',
                 'value' => '<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                 <div>
@@ -110,7 +110,10 @@ class SettingsSeeder extends Seeder
             </div>',
                 'created_at' => $now,
                 'updated_at' => $now
-            ]
+        ];
+        $data[] = [
+            'name' => 'Logo',
+            'value' => 'image path'
         ];
 
         DB::table('settings')->insert($data);

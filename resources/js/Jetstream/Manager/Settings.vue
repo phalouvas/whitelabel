@@ -1,10 +1,16 @@
 <template>
     <div class="p-6">
 
+        <!-- Logo -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="logo" value="Logo" />
+            <input type="file" ref="logo">
+        </div>
+
         <!-- Welcome -->
-        <div class="col-span-6 sm:col-span-12">
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
             <jet-label for="welcome" value="Welcome Page" />
-            <jet-editor id="welcome" class="mt-1 w-full" v-model="welcome"/>
+            <jet-editor id="welcome" class="mt-1 w-full" v-model="form.welcome"/>
         </div>
 
         <jet-action-message :on="recentlySuccessful" class="mr-3">
@@ -43,33 +49,30 @@
             return {
                 processing: false,
                 recentlySuccessful: false,
-                welcome: null,
+                form: this.$inertia.form({
+                    _method: 'PUT',
+                    welcome: null,
+                    logo: null,
+                }),
             }
         },
 
         mounted() {
-            this.welcome = this.$page.props.settings.welcome;
+            this.form.welcome = this.$page.props.settings.welcome;
         },
 
         methods: {
             updateSettings() {
                 this.processing = true;
-                axios
-                .put(
-                    route("manager.settings.update", {
-                        welcome: this.welcome,
-                    })
-                    )
-                    .then((response) => {
-                        this.recentlySuccessful = true;
-                    })
-                    .catch((error) => {
-                    //
-                    })
-                    .finally(() => {
-                        this.recentlySuccessful = false;
-                        this.processing = false;
-                    });
+                if (this.$refs.logo) {
+                    this.form.logo = this.$refs.logo.files[0];
+                }
+                this.form.post(route('manager.settings.update'), {
+                    errorBag: 'updateSettings',
+                    preserveScroll: true,
+                    onSuccess: () => (this.recentlySuccessful = true),
+                });
+                this.processing = false;
             },
 
         },

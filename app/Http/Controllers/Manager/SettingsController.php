@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,9 +42,19 @@ class SettingsController extends Controller
 
         Validator::make($request->all(), [
             'welcome' => ['required', 'string'],
+            'logo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
+        if ($request->logo) {
+            $name = $request->file('logo')->getClientOriginalName();
+            $path = $request->file('logo')->storeAs('public/images', 'logo.png');
+            File::move(storage_path('app/public/images/logo.png'), public_path('images/logo.png'));
+        }
+
         Settings::where('name', 'Welcome')->update(['value' => $request->welcome]);
-        return response('ok');
+
+        return $request->wantsJson()
+                    ? new JsonResponse('', 200)
+                    : back()->with('status', 'site-settings-updated');
     }
 }
