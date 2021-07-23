@@ -1,16 +1,16 @@
 <template>
 <div>
     <div v-if="editor" class="border">
-      <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'text-yellow-500': editor.isActive('bold') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-bold"></i>
       </button>
-      <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'text-yellow-500': editor.isActive('italic') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-italic"></i>
       </button>
-      <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'text-yellow-500': editor.isActive('strike') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-strikethrough"></i>
       </button>
-      <button @click="editor.chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleCode().run()" :class="{ 'text-yellow-500': editor.isActive('code') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-code"></i>
       </button>
       <button @click="editor.chain().focus().unsetAllMarks().run()" class="w-6 text-gray-500 hover:bg-gray-300">
@@ -19,37 +19,37 @@
       <button @click="editor.chain().focus().clearNodes().run()" class="w-6 text-gray-500 hover:bg-gray-300">
         clear nodes
       </button>
-      <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'text-yellow-500': editor.isActive('paragraph') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-paragraph"></i>
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'text-yellow-500': editor.isActive('heading', { level: 1 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
         h1
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'text-yellow-500': editor.isActive('heading', { level: 2 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
         h2
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'text-yellow-500': editor.isActive('heading', { level: 3 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
         h3
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'text-yellow-500': editor.isActive('heading', { level: 4 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
         h4
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'text-yellow-500': editor.isActive('heading', { level: 5 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
         h5
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'text-yellow-500': editor.isActive('heading', { level: 6 }) }" class="w-6 text-gray-500 hover:bg-gray-300">
         h6
       </button>
-      <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'text-yellow-500': editor.isActive('bulletList') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-list"></i>
       </button>
-      <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'text-yellow-500': editor.isActive('orderedList') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-list-ol"></i>
       </button>
-      <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'text-yellow-500': editor.isActive('codeBlock') }" class="w-6 text-gray-500 hover:bg-gray-300">
         <i class="fas fa-code"></i>
       </button>
-      <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }" class="w-6 text-gray-500 hover:bg-gray-300">
+      <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'text-yellow-500': editor.isActive('blockquote') }" class="w-6 text-gray-500 hover:bg-gray-300">
         blockquote
       </button>
       <button @click="editor.chain().focus().setHorizontalRule().run()" class="w-6 text-gray-500 hover:bg-gray-300">
@@ -120,3 +120,62 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+/* Basic editor styles */
+.ProseMirror {
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  ul,
+  ol {
+    padding: 0 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0D0D0D;
+    color: #FFF;
+    font-family: 'JetBrainsMono', monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0D0D0D, 0.1);
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid rgba(#0D0D0D, 0.1);
+    margin: 2rem 0;
+  }
+}
+</style>
