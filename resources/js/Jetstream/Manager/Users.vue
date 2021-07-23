@@ -186,7 +186,8 @@ export default {
     JetSecondaryButton,
     JetPrimaryButton,
     JetConfirmationModal,
-    JetCheckbox, JetToggle,
+    JetCheckbox,
+    JetToggle,
     JetLabel,
     JetInput,
   },
@@ -197,7 +198,7 @@ export default {
       processing: false,
       item: null,
       filters: {
-          name: null,
+        name: null,
         email: null,
         onlyTrashed: false,
       },
@@ -223,7 +224,7 @@ export default {
 
     clear() {
       this.filters = {
-          name: null,
+        name: null,
         email: null,
         onlyTrashed: false,
       };

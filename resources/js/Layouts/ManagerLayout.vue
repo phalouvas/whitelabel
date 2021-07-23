@@ -20,7 +20,7 @@
                                 <jet-nav-link :href="route('manager.users')" :active="route().current('manager.users')">
                                     Users
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('manager.settings')" :active="route().current('manager.settings')">
+                                <jet-nav-link :href="route('manager.settings.edit')" :active="route().current('manager.settings.edit')">
                                     Settings
                                 </jet-nav-link>
                             </div>
@@ -151,7 +151,7 @@
                         <jet-responsive-nav-link :href="route('manager.users')" :active="route().current('manager.users')">
                             Users
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('manager.settings')" :active="route().current('manager.settings')">
+                        <jet-responsive-nav-link :href="route('manager.settings.edit')" :active="route().current('manager.settings.edit')">
                             Settings
                         </jet-responsive-nav-link>
                     </div>

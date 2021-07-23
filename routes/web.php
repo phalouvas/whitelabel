@@ -38,6 +38,6 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified'
         Route::get('/{user}/restore', [\App\Http\Controllers\Manager\UsersController::class, 'restore'])->name('manager.users.restore');
     });
     Route::group(['prefix' => 'settings'], function () {
-        Route::get('/', [\App\Http\Controllers\Manager\UsersController::class, 'index'])->name('manager.settings');
+        Route::get('/', [\App\Http\Controllers\Manager\SettingsController::class, 'edit'])->name('manager.settings.edit');
     });
 });
