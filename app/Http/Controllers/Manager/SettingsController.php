@@ -34,7 +34,7 @@ class SettingsController extends Controller
      * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
      *
      * @param  array  $input
-     * @return void
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
     public function update(Request $request) {
 

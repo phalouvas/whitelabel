@@ -1,35 +1,20 @@
 <template>
-    <jet-form-section class="p-6">
+    <div class="p-6">
 
-        <template #title>
-            Site Information
-        </template>
+        <!-- Welcome -->
+        <div class="col-span-6 sm:col-span-12">
+            <jet-label for="welcome" value="Welcome Page" />
+            <jet-editor id="welcome" class="mt-1 w-full" v-model="welcome"/>
+        </div>
 
-        <template #description>
-            Update your site's settings and information.
-        </template>
+        <jet-action-message :on="recentlySuccessful" class="mr-3">
+            Saved.
+        </jet-action-message>
 
-        <template #form>
-
-            <!-- Welcome -->
-            <div class="col-span-6 sm:col-span-12">
-                <jet-label for="welcome" value="Welcome" />
-                <jet-editor id="welcome" class="mt-1 w-full" v-model="form.welcome"/>
-            </div>
-                <jet-input-error :message="form.errors.welcome" class="mt-2" />
-
-        </template>
-
-        <template #actions>
-            <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </jet-action-message>
-
-            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="updateSettings">
-                Save
-            </jet-button>
-        </template>
-    </jet-form-section>
+        <jet-button :class="{ 'opacity-25': processing }" :disabled="processing" @click="updateSettings">
+            Save
+        </jet-button>
+    </div>
 </template>
 
 <script>
@@ -56,22 +41,35 @@
 
         data() {
             return {
-                form: this.$inertia.form({
-                    _method: 'PUT',
-                    welcome: this.$page.props.settings.welcome,
-                }),
-
+                processing: false,
+                recentlySuccessful: false,
+                welcome: null,
             }
+        },
+
+        mounted() {
+            this.welcome = this.$page.props.settings.welcome;
         },
 
         methods: {
             updateSettings() {
-                return;
-                this.form.post(route('manager.settings.update'), {
-                    errorBag: 'updateSettings',
-                    preserveScroll: true,
-                    onSuccess: () => (this.clearPhotoFileInput()),
-                });
+                this.processing = true;
+                axios
+                .put(
+                    route("manager.settings.update", {
+                        welcome: this.welcome,
+                    })
+                    )
+                    .then((response) => {
+                        this.recentlySuccessful = true;
+                    })
+                    .catch((error) => {
+                    //
+                    })
+                    .finally(() => {
+                        this.recentlySuccessful = false;
+                        this.processing = false;
+                    });
             },
 
         },
