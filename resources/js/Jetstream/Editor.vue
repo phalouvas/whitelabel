@@ -59,7 +59,7 @@
         <i class="fas fa-redo"></i>
       </button>
     </div>
-  <editor-content class="border p-3" :editor="editor" />
+  <editor-content class="border p-3 overflow-y-scroll max-h-96" :editor="editor" />
 </div>
 </template>
 

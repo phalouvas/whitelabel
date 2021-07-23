@@ -21,6 +21,9 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'settings' => [
+            'welcome' => App\Models\Settings::where('name', 'Welcome')->first()->value
+        ],
     ]);
 });
 
