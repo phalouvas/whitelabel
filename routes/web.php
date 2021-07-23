@@ -33,11 +33,11 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified'
         return Inertia::render('Manager');
     })->name('manager');
     Route::group(['prefix' => 'users'], function () {
-        Route::get('/', [\App\Http\Controllers\UsersController::class, 'index'])->name('manager.users');
-        Route::get('/{user}/destroy', [\App\Http\Controllers\UsersController::class, 'destroy'])->name('manager.users.destroy');
-        Route::get('/{user}/restore', [\App\Http\Controllers\UsersController::class, 'restore'])->name('manager.users.restore');
+        Route::get('/', [\App\Http\Controllers\Manager\UsersController::class, 'index'])->name('manager.users');
+        Route::get('/{user}/destroy', [\App\Http\Controllers\Manager\UsersController::class, 'destroy'])->name('manager.users.destroy');
+        Route::get('/{user}/restore', [\App\Http\Controllers\Manager\UsersController::class, 'restore'])->name('manager.users.restore');
     });
     Route::group(['prefix' => 'settings'], function () {
-        Route::get('/', [\App\Http\Controllers\UsersController::class, 'index'])->name('manager.settings');
+        Route::get('/', [\App\Http\Controllers\Manager\UsersController::class, 'index'])->name('manager.settings');
     });
 });
