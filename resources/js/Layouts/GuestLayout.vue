@@ -46,12 +46,16 @@
                                     <template #content>
                                         <!-- Account Management -->
 
-                                        <jet-dropdown-link :href="route('login')">
+                                        <jet-dropdown-link :href="route('login')" v-if="!$page.props.user">
                                             Login
                                         </jet-dropdown-link>
 
-                                        <jet-dropdown-link :href="route('register')">
+                                        <jet-dropdown-link :href="route('register')" v-if="!$page.props.user">
                                             Register
+                                        </jet-dropdown-link>
+
+                                        <jet-dropdown-link :href="route('dashboard')" v-if="$page.props.user">
+                                            Dashboard
                                         </jet-dropdown-link>
 
                                     </template>
