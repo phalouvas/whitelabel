@@ -37,7 +37,7 @@ Route::group(['prefix' => 'contact-us'], function () {
             ],
         ]);
     })->name('contact-us');
-    Route::put('/update', [\App\Http\Controllers\GuestController::class, 'update'])->name('contact-us.update');
+    Route::put('/update', [\App\Http\Controllers\GuestController::class, 'contactUs'])->name('contact-us.update');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

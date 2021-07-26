@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Notifications\ContactUsNotification;
 use Illuminate\Http\Request;
-use App\Models\Settings;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class GuestController extends Controller
@@ -18,14 +19,16 @@ class GuestController extends Controller
      * @param  array  $input
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function update(Request $request) {
+    public function contactUs(Request $request) {
 
-        Validator::make($request->all(), [
+        $data = Validator::make($request->all(), [
             'name' => ['required', 'string'],
-            'email' => ['required', 'string|email'],
+            'email' => ['required', 'email'],
             'phone' => ['required', 'string'],
             'message' => ['required', 'string'],
         ])->validateWithBag('updateContactUs');
+
+        Notification::send(User::find(1), new ContactUsNotification($data));
 
         return $request->wantsJson()
                     ? new JsonResponse('', 200)

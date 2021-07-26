@@ -22,42 +22,42 @@
                             <template #form>
 
                                 <!-- Name -->
-                                <div class="col-span-6 sm:col-span-4">
+                                <div class="col-span-12 sm:col-span-12">
                                     <jet-label for="name" value="Name" />
-                                    <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
+                                    <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name"/>
                                     <jet-input-error :message="form.errors.name" class="mt-2" />
                                 </div>
 
                                 <!-- Email -->
-                                <div class="col-span-6 sm:col-span-4">
+                                <div class="col-span-12 sm:col-span-12">
                                     <jet-label for="email" value="Email" />
                                     <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email"/>
                                     <jet-input-error :message="form.errors.email" class="mt-2" />
                                 </div>
 
                                 <!-- Phone -->
-                                <div class="col-span-6 sm:col-span-4">
+                                <div class="col-span-12 sm:col-span-12">
                                     <jet-label for="phone" value="Phone" />
-                                    <jet-input id="phone" type="phone" class="mt-1 block w-full" v-model="form.phone" />
-                                    <span>Please use international phone number format (e.g. +35722000522)</span>
+                                    <jet-input id="phone" type="text" class="mt-1 block w-full" v-model="form.phone"/>
+                                    <span class="text-sm text-gray-400">*international phone number format</span>
                                     <jet-input-error :message="form.errors.phone" class="mt-2" />
                                 </div>
 
                                 <!-- Message -->
-                                <div class="col-span-6 sm:col-span-4">
+                                <div class="col-span-12 sm:col-span-12">
                                     <jet-label for="message" value="Message" />
-                                    <textarea id="message" type="message" class="mt-1 block w-full" v-model="form.message" />
+                                    <textarea id="message" type="message" class="mt-1 block w-full" rows="12" v-model="form.message" />
                                     <jet-input-error :message="form.errors.message" class="mt-2" />
                                 </div>
                             </template>
 
                             <template #actions>
                                 <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-                                    Saved.
+                                    Your message is successfully sent!
                                 </jet-action-message>
 
-                                <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                    Save
+                                <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing || form.recentlySuccessful">
+                                    Send
                                 </jet-button>
                             </template>
                         </jet-form-contact-us>
@@ -97,6 +97,7 @@
                     name: null,
                     email: null,
                     message: null,
+                    phone: null
                 }),
             }
         },
@@ -106,8 +107,16 @@
                 this.form.post(route('contact-us.update'), {
                     errorBag: 'updateContactUs',
                     preserveScroll: true,
+                    onSuccess: () => (this.clearForm()),
                 });
             },
+
+            clearForm() {
+                this.form.name = null;
+                this.form.email = null;
+                this.form.message = null;
+                this.form.phone = null;
+            }
 
         },
     }

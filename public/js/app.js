@@ -28307,16 +28307,28 @@ __webpack_require__.r(__webpack_exports__);
         _method: 'PUT',
         name: null,
         email: null,
-        message: null
+        message: null,
+        phone: null
       })
     };
   },
   methods: {
     updateContactUs: function updateContactUs() {
+      var _this = this;
+
       this.form.post(route('contact-us.update'), {
         errorBag: 'updateContactUs',
-        preserveScroll: true
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          return _this.clearForm();
+        }
       });
+    },
+    clearForm: function clearForm() {
+      this.form.name = null;
+      this.form.email = null;
+      this.form.message = null;
+      this.form.phone = null;
     }
   }
 });
@@ -34155,26 +34167,28 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Update your account's profile information and email address. ");
 
 var _hoisted_8 = {
-  "class": "col-span-6 sm:col-span-4"
+  "class": "col-span-12 sm:col-span-12"
 };
 var _hoisted_9 = {
-  "class": "col-span-6 sm:col-span-4"
+  "class": "col-span-12 sm:col-span-12"
 };
 var _hoisted_10 = {
-  "class": "col-span-6 sm:col-span-4"
+  "class": "col-span-12 sm:col-span-12"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, "Please use international phone number format (e.g. +35722000522)", -1
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "text-sm text-gray-400"
+}, "*international phone number format", -1
 /* HOISTED */
 );
 
 var _hoisted_12 = {
-  "class": "col-span-6 sm:col-span-4"
+  "class": "col-span-12 sm:col-span-12"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Saved. ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Your message is successfully sent! ");
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save ");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Send ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
@@ -34216,8 +34230,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             modelValue: $data.form.name,
             "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
               return $data.form.name = $event;
-            }),
-            autocomplete: "name"
+            })
           }, null, 8
           /* PROPS */
           , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
@@ -34248,7 +34261,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             value: "Phone"
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
             id: "phone",
-            type: "phone",
+            type: "text",
             "class": "mt-1 block w-full",
             modelValue: $data.form.phone,
             "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
@@ -34268,6 +34281,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             id: "message",
             type: "message",
             "class": "mt-1 block w-full",
+            rows: "12",
             "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
               return $data.form.message = $event;
             })
@@ -34297,7 +34311,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": {
               'opacity-25': $data.form.processing
             },
-            disabled: $data.form.processing
+            disabled: $data.form.processing || $data.form.recentlySuccessful
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [_hoisted_14];
