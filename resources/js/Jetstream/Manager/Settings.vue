@@ -10,7 +10,19 @@
         <!-- Welcome -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
             <jet-label for="welcome" value="Welcome Page" />
-            <jet-editor id="welcome" class="mt-1 w-full" v-model="form.welcome"/>
+            <textarea v-if="is_html" class="mt-1 border p-3 overflow-y-scroll max-h-96 w-full" v-model="form.welcome" rows="96"/>
+            <jet-editor v-else id="welcome" class="mt-1 w-full" v-model="form.welcome"/>
+            <div class="flex items-center w-full">
+            <jet-checkbox
+                name="isHtml"
+                id="isHtml"
+                v-model:checked="is_html"
+            />
+            <div class="ml-2">
+                <span v-if="is_html">Switch to editor</span>
+                <span v-else>Switch to plain HTML</span>
+            </div>
+            </div>
         </div>
 
         <jet-action-message :on="recentlySuccessful" class="mr-3">
@@ -32,6 +44,7 @@
     import JetActionMessage from '@/Jetstream/ActionMessage'
     import JetSecondaryButton from '@/Jetstream/SecondaryButton'
     import JetEditor from '@/Jetstream/Editor'
+    import JetCheckbox from '@/Jetstream/Checkbox'
 
     export default {
         components: {
@@ -42,13 +55,15 @@
             JetInputError,
             JetLabel,
             JetSecondaryButton,
-            JetEditor
+            JetEditor,
+            JetCheckbox
         },
 
         data() {
             return {
                 processing: false,
                 recentlySuccessful: false,
+                is_html: false,
                 form: this.$inertia.form({
                     _method: 'PUT',
                     welcome: null,
