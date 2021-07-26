@@ -17,7 +17,7 @@ class SettingsSeeder extends Seeder
         $now = date('Y-m-d H:i:s');
         $data = [];
         $data[] = [
-                'name' => 'Welcome',
+                'name' => 'welcome',
                 'value' => '<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                 <div>
                     <jet-application-logo class="block h-12 w-auto" />
@@ -116,22 +116,30 @@ class SettingsSeeder extends Seeder
 
         $data = [];
         $data[] = [
-            'name' => 'Token',
-            'value' => ''
+            'name' => 'token',
+            'value' => 'xxxxxxxxxxx',
+            'created_at' => $now,
+            'updated_at' => $now
         ];
         $data[] = [
-            'name' => 'Email',
-            'value' => env('ADMIN_EMAIL', 'manager@sms.to')
+            'name' => 'email',
+            'value' => env('ADMIN_EMAIL', 'manager@sms.to'),
+            'created_at' => $now,
+            'updated_at' => $now
         ];
         $data[] = [
-            'name' => 'Phone',
-            'value' => '+35722000522'
+            'name' => 'phone',
+            'value' => '+35722000522',
+            'created_at' => $now,
+            'updated_at' => $now
         ];
         $data[] = [
-            'name' => 'Address',
-            'value' => 'Intergo Telecom Ltd,<br/>
-                        Nikolaou Nikolaidi 3, Office 206,<br/>
-                        Paphos, 8010, Cyprus<br/>'
+            'name' => 'address',
+            'value' => 'Intergo Telecom Ltd,
+                        Nikolaou Nikolaidi 3, Office 206,
+                        Paphos, 8010, Cyprus',
+                        'created_at' => $now,
+                        'updated_at' => $now
         ];
 
         DB::table('settings')->insert($data);

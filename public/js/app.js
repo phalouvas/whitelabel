@@ -27093,7 +27093,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       processing: false,
-      recentlySuccessful: false,
       is_html: false,
       form: this.$inertia.form({
         _method: 'PUT',
@@ -27115,8 +27114,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateSettings: function updateSettings() {
-      var _this = this;
-
       this.processing = true;
 
       if (this.$refs.logo) {
@@ -27125,10 +27122,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.post(route('manager.settings.update'), {
         errorBag: 'updateSettings',
-        preserveScroll: true,
-        onSuccess: function onSuccess() {
-          return _this.recentlySuccessful = true;
-        }
+        preserveScroll: true
       });
       this.processing = false;
     }
@@ -30215,21 +30209,24 @@ var _hoisted_7 = {
   "class": "p-6 m-6 border col-span-6 sm:col-span-12"
 };
 var _hoisted_8 = {
-  "class": "flex items-center w-full"
+  "class": "p-6 m-6 border col-span-6 sm:col-span-12"
 };
 var _hoisted_9 = {
-  "class": "ml-2"
+  "class": "flex items-center w-full"
 };
 var _hoisted_10 = {
-  key: 0
+  "class": "ml-2"
 };
 var _hoisted_11 = {
+  key: 0
+};
+var _hoisted_12 = {
   key: 1
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Saved. ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Saved. ");
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save ");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
@@ -30283,13 +30280,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Welcome "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Address "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "address",
+    value: "Address"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
+    "class": "mt-1 border p-3 overflow-y-scroll max-h-96 w-full",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.form.address = $event;
+    }),
+    rows: "4"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.address]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Welcome "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "welcome",
     value: "Welcome Page"
   }), $data.is_html ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("textarea", {
     key: 0,
     "class": "mt-1 border p-3 overflow-y-scroll max-h-96 w-full",
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.form.welcome = $event;
     }),
     rows: "96"
@@ -30300,26 +30308,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "welcome",
     "class": "mt-1 w-full",
     modelValue: $data.form.welcome,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.form.welcome = $event;
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue"])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_checkbox, {
+  , ["modelValue"])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_checkbox, {
     name: "isHtml",
     id: "isHtml",
     checked: $data.is_html,
-    "onUpdate:checked": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:checked": _cache[7] || (_cache[7] = function ($event) {
       return $data.is_html = $event;
     })
   }, null, 8
   /* PROPS */
-  , ["checked"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [$data.is_html ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, "Switch to editor")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_11, "Switch to plain HTML"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_action_message, {
-    on: $data.recentlySuccessful,
+  , ["checked"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [$data.is_html ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_11, "Switch to editor")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_12, "Switch to plain HTML"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_action_message, {
+    on: $data.form.recentlySuccessful,
     "class": "mr-3"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_12];
+      return [_hoisted_13];
     }),
     _: 1
     /* STABLE */
@@ -30334,7 +30342,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: $options.updateSettings
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_13];
+      return [_hoisted_14];
     }),
     _: 1
     /* STABLE */

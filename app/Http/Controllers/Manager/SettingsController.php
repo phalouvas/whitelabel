@@ -25,11 +25,11 @@ class SettingsController extends Controller
         $settings = Settings::select('name', 'value')->get();
         return Inertia::render('Manager/Settings', [
             'settings' => [
-                'token' => $settings->where('name', 'Token')->first()->value,
-                'welcome' => $settings->where('name', 'Welcome')->first()->value,
-                'email' => $settings->where('name', 'Email')->first()->value,
-                'phone' => $settings->where('name', 'Phone')->first()->value,
-                'address' => $settings->where('name', 'Address')->first()->value,
+                'token' => $settings->where('name', 'token')->first()->value,
+                'welcome' => $settings->where('name', 'welcome')->first()->value,
+                'email' => $settings->where('name', 'email')->first()->value,
+                'phone' => $settings->where('name', 'phone')->first()->value,
+                'address' => $settings->where('name', 'address')->first()->value,
             ],
         ]);
     }
@@ -47,7 +47,7 @@ class SettingsController extends Controller
         Validator::make($request->all(), [
             'token' => ['required', 'string'],
             'welcome' => ['required', 'string'],
-            'email' => ['required', 'string|email'],
+            'email' => ['required', 'email'],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string'],
             'logo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
@@ -59,8 +59,11 @@ class SettingsController extends Controller
             File::move(storage_path('app/public/images/logo.png'), public_path('images/logo.png'));
         }
 
-        Settings::where('name', 'ApiKey')->update(['value' => $request->api_key]);
-        Settings::where('name', 'Welcome')->update(['value' => $request->welcome]);
+        Settings::where('name', 'token')->update(['value' => $request->token]);
+        Settings::where('name', 'welcome')->update(['value' => $request->welcome]);
+        Settings::where('name', 'email')->update(['value' => $request->email]);
+        Settings::where('name', 'phone')->update(['value' => $request->phone]);
+        Settings::where('name', 'address')->update(['value' => $request->address]);
 
         return $request->wantsJson()
                     ? new JsonResponse('', 200)

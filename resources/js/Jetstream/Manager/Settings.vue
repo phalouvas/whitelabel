@@ -25,6 +25,12 @@
             <input type="text" ref="email" class="mt-1 p-3 w-full" v-model="form.email">
         </div>
 
+        <!-- Address -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="address" value="Address" />
+            <textarea class="mt-1 border p-3 overflow-y-scroll max-h-96 w-full" v-model="form.address" rows="4"/>
+        </div>
+
         <!-- Welcome -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
             <jet-label for="welcome" value="Welcome Page" />
@@ -43,7 +49,7 @@
             </div>
         </div>
 
-        <jet-action-message :on="recentlySuccessful" class="mr-3">
+        <jet-action-message :on="form.recentlySuccessful" class="mr-3">
             Saved.
         </jet-action-message>
 
@@ -80,7 +86,6 @@
         data() {
             return {
                 processing: false,
-                recentlySuccessful: false,
                 is_html: false,
                 form: this.$inertia.form({
                     _method: 'PUT',
@@ -111,7 +116,6 @@
                 this.form.post(route('manager.settings.update'), {
                     errorBag: 'updateSettings',
                     preserveScroll: true,
-                    onSuccess: () => (this.recentlySuccessful = true),
                 });
                 this.processing = false;
             },

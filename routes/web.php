@@ -22,7 +22,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'settings' => [
-            'welcome' => App\Models\Settings::where('name', 'Welcome')->first()->value
+            'welcome' => App\Models\Settings::where('name', 'welcome')->first()->value
         ],
     ]);
 });
@@ -33,9 +33,9 @@ Route::group(['prefix' => 'contact-us'], function () {
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'settings' => [
-                'email' => App\Models\Settings::where('name', 'Email')->first()->value,
-                'phone' => App\Models\Settings::where('name', 'Phone')->first()->value,
-                'address' => App\Models\Settings::where('name', 'Address')->first()->value
+                'email' => App\Models\Settings::where('name', 'email')->first()->value,
+                'phone' => App\Models\Settings::where('name', 'phone')->first()->value,
+                'address' => App\Models\Settings::where('name', 'address')->first()->value
             ],
         ]);
     })->name('contact-us');
