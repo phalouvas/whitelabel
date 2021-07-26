@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class UsersController extends Controller
@@ -66,5 +68,26 @@ class UsersController extends Controller
     {
         User::onlyTrashed()->find($user_id)->restore();
         return response('ok');
+    }
+
+    /**
+     * Edit the money of a user
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function editMoney(User $user, Request $request)
+    {
+        Validator::make($request->all(), [
+            'amount' => ['required', 'numeric'],
+        ])->validateWithBag('updateProfileInformation');
+
+        $user->increment('money', $request->amount);
+
+        return $request->wantsJson()
+                    ? new JsonResponse('', 200)
+                    : back()->with('status', 'user-money-updated');
     }
 }
