@@ -3,14 +3,26 @@
 
         <!-- Api Key -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
-            <jet-label for="api_key" value="SMSto - Api Key" />
-            <input type="text" ref="api_key" class="mt-1 p-3 w-full" v-model="form.api_key">
+            <jet-label for="token" value="SMSto - Api Key" />
+            <input type="text" ref="token" class="mt-1 p-3 w-full" v-model="form.token">
         </div>
 
         <!-- Logo -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
             <jet-label for="logo" value="Logo" />
             <input type="file" ref="logo">
+        </div>
+
+        <!-- Phone -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="phone" value="Phone" />
+            <input type="text" ref="phone" class="mt-1 p-3 w-full" v-model="form.phone">
+        </div>
+
+        <!-- Email -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="email" value="Email" />
+            <input type="text" ref="email" class="mt-1 p-3 w-full" v-model="form.email">
         </div>
 
         <!-- Welcome -->
@@ -74,14 +86,17 @@
                     _method: 'PUT',
                     welcome: null,
                     logo: null,
-                    api_key: null
+                    token: null,
+                    email: null,
+                    phone: null,
+                    address: null
                 }),
             }
         },
 
         mounted() {
             this.form.welcome = this.$page.props.settings.welcome;
-            this.form.api_key = this.$page.props.settings.api_key;
+            this.form.token = this.$page.props.settings.token;
         },
 
         methods: {

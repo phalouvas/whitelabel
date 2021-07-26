@@ -25,8 +25,11 @@ class SettingsController extends Controller
         $settings = Settings::select('name', 'value')->get();
         return Inertia::render('Manager/Settings', [
             'settings' => [
-                'api_key' => $settings->where('name', 'ApiKey')->first()->value,
-                'welcome' => $settings->where('name', 'Welcome')->first()->value
+                'token' => $settings->where('name', 'Token')->first()->value,
+                'welcome' => $settings->where('name', 'Welcome')->first()->value,
+                'email' => $settings->where('name', 'Email')->first()->value,
+                'phone' => $settings->where('name', 'Phone')->first()->value,
+                'address' => $settings->where('name', 'Address')->first()->value,
             ],
         ]);
     }
@@ -42,7 +45,11 @@ class SettingsController extends Controller
     public function update(Request $request) {
 
         Validator::make($request->all(), [
+            'token' => ['required', 'string'],
             'welcome' => ['required', 'string'],
+            'email' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'address' => ['required', 'string'],
             'logo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 

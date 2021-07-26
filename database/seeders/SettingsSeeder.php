@@ -17,10 +17,6 @@ class SettingsSeeder extends Seeder
         $now = date('Y-m-d H:i:s');
         $data = [];
         $data[] = [
-            'name' => 'ApiKey',
-            'value' => ''
-        ];
-        $data[] = [
                 'name' => 'Welcome',
                 'value' => '<div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                 <div>
@@ -114,6 +110,28 @@ class SettingsSeeder extends Seeder
             </div>',
                 'created_at' => $now,
                 'updated_at' => $now
+        ];
+
+        DB::table('settings')->insert($data);
+
+        $data = [];
+        $data[] = [
+            'name' => 'Token',
+            'value' => ''
+        ];
+        $data[] = [
+            'name' => 'Email',
+            'value' => env('ADMIN_EMAIL', 'manager@sms.to')
+        ];
+        $data[] = [
+            'name' => 'Phone',
+            'value' => '+35722000522'
+        ];
+        $data[] = [
+            'name' => 'Address',
+            'value' => 'Intergo Telecom Ltd,<br/>
+                        Nikolaou Nikolaidi 3, Office 206,<br/>
+                        Paphos, 8010, Cyprus<br/>'
         ];
 
         DB::table('settings')->insert($data);
