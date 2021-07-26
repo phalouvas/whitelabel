@@ -12,11 +12,19 @@
                     <div class="p-3 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none">
                         <jet-form-contact-us @submitted="updateContactUs">
                             <template #title>
-                                Profile Information
+                                Direct Contact
                             </template>
 
-                            <template #description>
-                                Update your account's profile information and email address.
+                            <template #email>
+                                {{$page.props.settings.email}}
+                            </template>
+
+                            <template #phone>
+                                {{$page.props.settings.phone}}
+                            </template>
+
+                            <template #address>
+                                {{$page.props.settings.address}}
                             </template>
 
                             <template #form>
