@@ -25,6 +25,7 @@ class SettingsController extends Controller
         $settings = Settings::select('name', 'value')->get();
         return Inertia::render('Manager/Settings', [
             'settings' => [
+                'api_key' => $settings->where('name', 'ApiKey')->first()->value,
                 'welcome' => $settings->where('name', 'Welcome')->first()->value
             ],
         ]);
@@ -51,6 +52,7 @@ class SettingsController extends Controller
             File::move(storage_path('app/public/images/logo.png'), public_path('images/logo.png'));
         }
 
+        Settings::where('name', 'ApiKey')->update(['value' => $request->api_key]);
         Settings::where('name', 'Welcome')->update(['value' => $request->welcome]);
 
         return $request->wantsJson()

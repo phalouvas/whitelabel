@@ -1,6 +1,12 @@
 <template>
     <div class="p-6">
 
+        <!-- Api Key -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="api_key" value="SMSto - Api Key" />
+            <input type="text" ref="api_key" class="mt-1 p-3 w-full" v-model="form.api_key">
+        </div>
+
         <!-- Logo -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
             <jet-label for="logo" value="Logo" />
@@ -68,12 +74,14 @@
                     _method: 'PUT',
                     welcome: null,
                     logo: null,
+                    api_key: null
                 }),
             }
         },
 
         mounted() {
             this.form.welcome = this.$page.props.settings.welcome;
+            this.form.api_key = this.$page.props.settings.api_key;
         },
 
         methods: {
