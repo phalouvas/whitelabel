@@ -27,6 +27,19 @@ Route::get('/', function () {
     ]);
 });
 
+Route::group(['prefix' => 'contact-us'], function () {
+    Route::get('/', function () {
+        return Inertia::render('ContactUs', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'settings' => [
+                'welcome' => App\Models\Settings::where('name', 'Welcome')->first()->value
+            ],
+        ]);
+    })->name('contact-us');
+    Route::put('/update', [\App\Http\Controllers\GuestController::class, 'update'])->name('contact-us.update');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');

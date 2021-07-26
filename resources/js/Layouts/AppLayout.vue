@@ -20,6 +20,9 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('contact-us')" :active="route().current('contact-us')">
+                                    Contact Us
+                                </jet-nav-link>
                             </div>
                         </div>
 
@@ -147,6 +150,9 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('contact-us')" :active="route().current('contact-us')">
+                            Contact Us
                         </jet-responsive-nav-link>
                     </div>
 

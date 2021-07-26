@@ -47,7 +47,7 @@ class SettingsController extends Controller
         Validator::make($request->all(), [
             'token' => ['required', 'string'],
             'welcome' => ['required', 'string'],
-            'email' => ['required', 'string'],
+            'email' => ['required', 'string|email'],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string'],
             'logo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],

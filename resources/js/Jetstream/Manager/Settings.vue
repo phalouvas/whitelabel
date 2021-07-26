@@ -97,6 +97,9 @@
         mounted() {
             this.form.welcome = this.$page.props.settings.welcome;
             this.form.token = this.$page.props.settings.token;
+            this.form.email = this.$page.props.settings.email;
+            this.form.phone = this.$page.props.settings.phone;
+            this.form.address = this.$page.props.settings.address;
         },
 
         methods: {
