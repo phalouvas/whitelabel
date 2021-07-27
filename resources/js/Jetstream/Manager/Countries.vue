@@ -9,7 +9,7 @@
             v-model:checked="filters.onlyTrashed"
             @change="refresh"
           />
-          <div class="ml-2">Show Banned</div>
+          <div class="ml-2">Show Trashed</div>
         </div>
       </jet-label>
       <jet-input
@@ -19,14 +19,6 @@
         class="m-2 mt-1 block w-full"
         placeholder="Name..."
         v-model="filters.name"
-      />
-      <jet-input
-        name="email"
-        id="email"
-        type="text"
-        class="m-2 mt-1 block w-full"
-        placeholder="Email..."
-        v-model="filters.email"
       />
       <button @click="refresh()" title="Go" class="hover:bg-red-100">
         <i class="p-2 text-blue-400 fas fa-search fa-2x"></i>
@@ -41,47 +33,49 @@
         <thead>
           <tr class="border">
             <th class="w-1 p-3 text-left">#ID</th>
-            <th class="w-4 text-left">Name</th>
-            <th class="w-4 text-left">Email</th>
-            <th class="w-2 text-left">Money</th>
-            <th class="w-2 text-left"></th>
+            <th class="w-6 text-left">Name</th>
+            <th class="w-4 text-left">A2 Code</th>
+            <th class="w-4 text-left">A3 Code</th>
+            <th class="w-1 text-left">Price</th>
+            <th class="w-4 text-left"></th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="border"
-            v-for="item in $page.props.users.data"
+            v-for="item in $page.props.countries.data"
             :key="item.id"
           >
             <td class="p-3">{{ item.id }}</td>
             <td>{{ item.name }}</td>
-            <td>{{ item.email }}</td>
-            <td>{{ formatMoney(item.money) }}</td>
+            <td>{{ item.a2_code }}</td>
+            <td>{{ item.a3_code }}</td>
+            <td><jet-money :value="item.price"/></td>
             <td>
               <div v-if="filters.onlyTrashed">
                 <button
                   v-if="filters.onlyTrashed"
                   @click="restore(item)"
-                  title="Unban"
+                  title="Restore"
                   class="hover:bg-green-100"
                 >
-                  <i class="text-green-400 fas fa-user-check fa-2x"></i>
+                  <i class="text-green-400 fas fa-trash-restore fa-2x"></i>
                 </button>
               </div>
               <div v-else>
                 <button
-                  title="Money"
+                  title="Price"
                   class="p-1 hover:bg-yellow-100"
-                  @click="editMoney(item)"
+                  @click="editPrice(item)"
                 >
                   <i class="text-yellow-400 fas fa-money-bill-wave fa-2x"></i>
                 </button>
                 <button
-                  @click="confirmBan(item)"
-                  title="Ban"
+                  @click="confirmTrash(item)"
+                  title="Trash"
                   class="p-1 hover:bg-red-100"
                 >
-                  <i class="text-red-400 fas fa-user-lock fa-2x"></i>
+                  <i class="text-red-400 fas fa-trash fa-2x"></i>
                 </button>
               </div>
             </td>
@@ -89,20 +83,20 @@
         </tbody>
       </table>
 
-      <pagination class="mt-6" :links="$page.props.users.links" />
+      <pagination class="mt-6" :links="$page.props.countries.links" />
     </div>
 
     <!-- Delete Token Confirmation Modal -->
-    <jet-confirmation-modal :show="confirmingBan" @close="closeModal">
-      <template #title> Ban User </template>
+    <jet-confirmation-modal :show="confirmingTrash" @close="closeModal">
+      <template #title> Trash Country </template>
 
       <template #content>
-        Are you sure you would like to ban user
-        <strong>{{ item.name }} - {{ item.email }}</strong> ?
+        Are you sure you would like to trash item
+        <strong>{{ item.name }}</strong> ?
       </template>
 
       <template #footer>
-        <jet-secondary-button @click="confirmingBan = false">
+        <jet-secondary-button @click="confirmingTrash = false">
           Close
         </jet-secondary-button>
 
@@ -112,50 +106,45 @@
           :class="{ 'opacity-25': processing }"
           :disabled="processing"
         >
-          Ban
+          Trash
         </jet-danger-button>
       </template>
     </jet-confirmation-modal>
 
-    <!-- Update money Permissions Modal -->
-    <jet-dialog-modal :show="editingUserMoney" @close="editingUserMoney = null">
-      <template #title> Edit Money - {{ editingUserMoney.email }}</template>
+    <!-- Update price Permissions Modal -->
+    <jet-dialog-modal :show="editingCountryPrice" @close="editingCountryPrice = null">
+      <template #title> Edit Price - {{ editingCountryPrice.name }}</template>
 
       <template #content>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <jet-label for="amount" value="Amount" />
+          <jet-label for="price" value="New Price" />
           <input
             type="number"
-            ref="amount"
+            ref="price"
             class="mt-1 p-3 w-full"
-            v-model="updateMoneyForm.amount"
+            v-model="updatePriceForm.price"
           />
-          <jet-label for="money" value="Current Money" />
-          <span>
-            {{formatMoney(editingUserMoney.money)}}
-          </span>
-          <jet-label for="estimated" value="Estimated Money" />
-          <span>
-            {{estimatedMoney}}
-          </span>
+          <jet-label for="price" value="Current Price" />
+          <jet-money :value="editingCountryPrice.price"/>
         </div>
       </template>
 
       <template #footer>
-        <jet-secondary-button @click="editingUserMoney = null">
+        <jet-secondary-button @click="editingCountryPrice = null">
           Cancel
         </jet-secondary-button>
 
         <jet-button
           class="ml-2"
-          @click="updateMoney"
-          :class="{ 'opacity-25': updateMoneyForm.processing }"
-          :disabled="updateMoneyForm.processing"
+          @click="updatePrice"
+          :class="{ 'opacity-25': updatePriceForm.processing }"
+          :disabled="updatePriceForm.processing"
         >
           Save
         </jet-button>
       </template>
     </jet-dialog-modal>
+
   </div>
 </template>
 
@@ -172,6 +161,7 @@ import JetCheckbox from "@/Jetstream/Checkbox";
 import JetToggle from "@/Jetstream/Toggle";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
+import JetMoney from "@/Jetstream/Money";
 import { Inertia } from "@inertiajs/inertia";
 
 export default {
@@ -187,47 +177,37 @@ export default {
     JetCheckbox,
     JetToggle,
     JetLabel,
+    JetMoney,
     JetInput,
   },
 
   data() {
     return {
-      confirmingBan: false,
-      editingUserMoney: null,
+      confirmingTrash: false,
+      editingCountryPrice: null,
       processing: false,
       item: null,
       filters: {
         name: null,
-        email: null,
         onlyTrashed: false,
       },
-      updateMoneyForm: this.$inertia.form({
-        amount: 0,
+      updatePriceForm: this.$inertia.form({
+        price: 0,
       }),
     };
   },
 
-  computed: {
-    estimatedMoney() {
-        let amount = parseFloat(this.updateMoneyForm.amount);
-        let money = parseFloat(this.editingUserMoney.money);
-        let result = amount + money;
-      return this.formatMoney(result);
-    },
-  },
-
   methods: {
-    confirmBan(item) {
+    confirmTrash(item) {
       this.item = item;
-      this.confirmingBan = true;
+      this.confirmingTrash = true;
     },
 
     refresh() {
       Inertia.reload({
-        only: ["users"],
+        only: ["countries"],
         data: {
           name: this.filters.name,
-          email: this.filters.email,
           onlyTrashed: this.filters.onlyTrashed,
         },
       });
@@ -236,7 +216,6 @@ export default {
     clear() {
       this.filters = {
         name: null,
-        email: null,
         onlyTrashed: false,
       };
       this.refresh();
@@ -247,12 +226,12 @@ export default {
 
       axios
         .get(
-          route("manager.users.destroy", {
-            user: this.item,
+          route("manager.countries.destroy", {
+            country: this.item,
           })
         )
         .then((response) => {
-          Inertia.reload({ only: ["users"] });
+          Inertia.reload({ only: ["countries"] });
         })
         .catch((error) => {
           //
@@ -269,12 +248,12 @@ export default {
 
       axios
         .get(
-          route("manager.users.restore", {
-            user: this.item,
+          route("manager.countries.restore", {
+            country: this.item,
           })
         )
         .then((response) => {
-          Inertia.reload({ only: ["users"] });
+          Inertia.reload({ only: ["countries"] });
         })
         .catch((error) => {
           //
@@ -285,35 +264,27 @@ export default {
     },
 
     closeModal() {
-      this.confirmingBan = false;
+      this.confirmingTrash = false;
       this.item = null;
 
-      this.form.reset();
+      this.updatePriceForm.reset();
     },
 
-    editMoney(item) {
-      this.editingUserMoney = item;
+    editPrice(item) {
+      this.editingCountryPrice = item;
     },
 
-    updateMoney() {
-      this.updateMoneyForm.put(
-        route("manager.users.money.edit", this.editingUserMoney),
+    updatePrice() {
+      this.updatePriceForm.put(
+        route("manager.countries.update", this.editingCountryPrice),
         {
           preserveScroll: true,
           preserveState: true,
-          onSuccess: () => (this.editingUserMoney = null),
+          onSuccess: () => (this.editingCountryPrice = null),
         }
       );
     },
 
-    formatMoney(value) {
-      var formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "EUR",
-      });
-
-      return formatter.format(value);
-    },
   },
 };
 </script>

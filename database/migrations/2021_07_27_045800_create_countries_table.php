@@ -21,6 +21,7 @@ class CreateCountriesTable extends Migration
             $table->string('a2_code', 2)->index();
             $table->string('a3_code', 3);
             $table->decimal('price', 22, 4)->default(0.08);
+            $table->timestamps();
             $table->softDeletes();
         });
 

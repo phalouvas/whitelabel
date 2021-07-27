@@ -20,6 +20,9 @@
                                 <jet-nav-link :href="route('manager.users')" :active="route().current('manager.users')">
                                     Users
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('manager.countries')" :active="route().current('manager.countries')">
+                                    Countries
+                                </jet-nav-link>
                                 <jet-nav-link :href="route('manager.settings.edit')" :active="route().current('manager.settings.edit')">
                                     Settings
                                 </jet-nav-link>
@@ -150,6 +153,9 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <jet-responsive-nav-link :href="route('manager.users')" :active="route().current('manager.users')">
                             Users
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('manager.countries')" :active="route().current('manager.countries')">
+                            Countries
                         </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('manager.settings.edit')" :active="route().current('manager.settings.edit')">
                             Settings

@@ -79,4 +79,10 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified'
         Route::get('/', [\App\Http\Controllers\Manager\SettingsController::class, 'edit'])->name('manager.settings.edit');
         Route::put('/update', [\App\Http\Controllers\Manager\SettingsController::class, 'update'])->name('manager.settings.update');
     });
+    Route::group(['prefix' => 'countries'], function () {
+        Route::get('/', [\App\Http\Controllers\Manager\CountriesController::class, 'index'])->name('manager.countries');
+        Route::get('/{country}/destroy', [\App\Http\Controllers\Manager\CountriesController::class, 'destroy'])->name('manager.countries.destroy');
+        Route::get('/{country}/restore', [\App\Http\Controllers\Manager\CountriesController::class, 'restore'])->name('manager.countries.restore');
+        Route::put('/{country}/update', [\App\Http\Controllers\Manager\CountriesController::class, 'update'])->name('manager.countries.update');
+    });
 });
