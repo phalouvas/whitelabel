@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -57,6 +58,8 @@ Route::group(['prefix' => 'contact-us'], function () {
     })->name('contact-us');
     Route::put('/update', [\App\Http\Controllers\GuestController::class, 'contactUs'])->name('contact-us.update');
 });
+
+Route::get('/pricing', [\App\Http\Controllers\GuestController::class, 'countries'])->name('pricing');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');

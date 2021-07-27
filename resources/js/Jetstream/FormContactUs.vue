@@ -2,9 +2,9 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1 flex justify-between">
         <div class="px-4 sm:px-0">
-            <h3 class="text-lg font-medium text-gray-900">
+            <h4 class="text-lg font-medium text-gray-900">
                 <slot name="title"></slot>
-            </h3>
+            </h4>
 
             <p class="mt-1 text-md text-gray-400">
                 <i class="far fa-envelope p-2"></i>
@@ -16,7 +16,7 @@
                 <slot name="phone"></slot>
             </p>
 
-            <p class="mt-1 text-md text-gray-400">
+            <p class="mt-1 text-sm text-gray-400">
                 <i class="fas fa-map-marker-alt p-2"></i>
                 <slot name="address"></slot>
             </p>

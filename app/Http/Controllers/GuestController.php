@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\User;
 use App\Notifications\ContactUsNotification;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class GuestController extends Controller
 {
@@ -33,5 +35,20 @@ class GuestController extends Controller
         return $request->wantsJson()
                     ? new JsonResponse('', 200)
                     : back()->with('status', 'contact-us-updated');
+    }
+
+    /**
+     * Get country prices
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param Request $request
+     * @see \Inertia\ResponseFactory
+     */
+    public function countries()
+    {
+        return Inertia::render('Pricing', [
+            'countries' => Country::all(),
+        ]);
     }
 }
