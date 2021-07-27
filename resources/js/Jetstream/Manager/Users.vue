@@ -44,6 +44,7 @@
             <th class="w-4 text-left">Name</th>
             <th class="w-4 text-left">Email</th>
             <th class="w-2 text-left">Money</th>
+            <th class="w-2 text-left">Discount</th>
             <th class="w-2 text-left"></th>
           </tr>
         </thead>
@@ -56,7 +57,28 @@
             <td class="p-3">{{ item.id }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.email }}</td>
-            <td>{{ formatMoney(item.money) }}</td>
+            <td>
+                <button
+                  v-if="!filters.onlyTrashed"
+                  title="Edit"
+                  class="p-1 bg-yellow-500 hover:bg-yellow-700 font-bold py-2 px-4 rounded-full"
+                  @click="editMoney(item)"
+                >
+                    <jet-money class="text-white" :value="item.money"/>
+                </button>
+                <jet-money v-else :value="item.money"/>
+            </td>
+            <td>
+                <button
+                  v-if="!filters.onlyTrashed"
+                  title="Edit"
+                  class="p-1 bg-gray-100 hover:bg-gray-200 font-bold py-2 px-4 rounded-full"
+                  @click="editDiscount(item)"
+                >
+                    <span v-if="item.discount">% {{item.discount}}</span>
+                    <span v-else class="text-gray">-</span>
+                </button>
+            </td>
             <td>
               <div v-if="filters.onlyTrashed">
                 <button
@@ -69,13 +91,6 @@
                 </button>
               </div>
               <div v-else>
-                <button
-                  title="Money"
-                  class="p-1 hover:bg-yellow-100"
-                  @click="editMoney(item)"
-                >
-                  <i class="text-yellow-400 fas fa-money-bill-wave fa-2x"></i>
-                </button>
                 <button
                   @click="confirmBan(item)"
                   title="Ban"
@@ -117,7 +132,7 @@
       </template>
     </jet-confirmation-modal>
 
-    <!-- Update money Permissions Modal -->
+    <!-- Update money Modal -->
     <jet-dialog-modal :show="editingUserMoney" @close="editingUserMoney = null">
       <template #title> Edit Money - {{ editingUserMoney.email }}</template>
 
@@ -131,9 +146,7 @@
             v-model="updateMoneyForm.amount"
           />
           <jet-label for="money" value="Current Money" />
-          <span>
-            {{formatMoney(editingUserMoney.money)}}
-          </span>
+          <jet-money :value="editingUserMoney.money"/>
           <jet-label for="estimated" value="Estimated Money" />
           <span>
             {{estimatedMoney}}
@@ -156,6 +169,40 @@
         </jet-button>
       </template>
     </jet-dialog-modal>
+
+    <!-- Update discount Modal -->
+    <jet-dialog-modal :show="editingUserDiscount" @close="editingUserDiscount = null">
+      <template #title> Edit Discount - {{ editingUserDiscount.email }}</template>
+
+      <template #content>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <jet-label for="amount" value="%" />
+          <input
+            type="number"
+            ref="amount"
+            class="mt-1 p-3 w-full"
+            v-model="updateDiscountForm.amount"
+          />
+          <jet-label value="Current Discount" />
+          % {{editingUserDiscount.discount}}
+        </div>
+      </template>
+
+      <template #footer>
+        <jet-secondary-button @click="editingUserDiscount = null">
+          Cancel
+        </jet-secondary-button>
+
+        <jet-button
+          class="ml-2"
+          @click="updateDiscount"
+          :class="{ 'opacity-25': updateDiscountForm.processing }"
+          :disabled="updateDiscountForm.processing"
+        >
+          Save
+        </jet-button>
+      </template>
+    </jet-dialog-modal>
   </div>
 </template>
 
@@ -172,6 +219,7 @@ import JetCheckbox from "@/Jetstream/Checkbox";
 import JetToggle from "@/Jetstream/Toggle";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
+import JetMoney from "@/Jetstream/Money";
 import { Inertia } from "@inertiajs/inertia";
 
 export default {
@@ -187,13 +235,13 @@ export default {
     JetCheckbox,
     JetToggle,
     JetLabel,
+    JetMoney,
     JetInput,
   },
 
   data() {
     return {
       confirmingBan: false,
-      editingUserMoney: null,
       processing: false,
       item: null,
       filters: {
@@ -201,7 +249,12 @@ export default {
         email: null,
         onlyTrashed: false,
       },
+      editingUserMoney: null,
       updateMoneyForm: this.$inertia.form({
+        amount: 0,
+      }),
+      editingUserDiscount: null,
+      updateDiscountForm: this.$inertia.form({
         amount: 0,
       }),
     };
@@ -209,10 +262,15 @@ export default {
 
   computed: {
     estimatedMoney() {
-        let amount = parseFloat(this.updateMoneyForm.amount);
-        let money = parseFloat(this.editingUserMoney.money);
-        let result = amount + money;
-      return this.formatMoney(result);
+      let amount = parseFloat(this.updateMoneyForm.amount);
+      let money = parseFloat(this.editingUserMoney.money);
+      let result = amount + money;
+      var formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "EUR",
+      });
+
+      return formatter.format(result);
     },
   },
 
@@ -297,7 +355,7 @@ export default {
 
     updateMoney() {
       this.updateMoneyForm.put(
-        route("manager.users.money.edit", this.editingUserMoney),
+        route("manager.users.money.update", this.editingUserMoney),
         {
           preserveScroll: true,
           preserveState: true,
@@ -306,13 +364,19 @@ export default {
       );
     },
 
-    formatMoney(value) {
-      var formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "EUR",
-      });
+    editDiscount(item) {
+      this.editingUserDiscount = item;
+    },
 
-      return formatter.format(value);
+    updateDiscount() {
+      this.updateDiscountForm.put(
+        route("manager.users.discount.update", this.editingUserDiscount),
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onSuccess: () => (this.editingUserDiscount = null),
+        }
+      );
     },
   },
 };

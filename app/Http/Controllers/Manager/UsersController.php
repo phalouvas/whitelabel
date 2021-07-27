@@ -78,7 +78,7 @@ class UsersController extends Controller
      * @param User $user
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function editMoney(User $user, Request $request)
+    public function updateMoney(User $user, Request $request)
     {
         Validator::make($request->all(), [
             'amount' => ['required', 'numeric'],
@@ -89,5 +89,26 @@ class UsersController extends Controller
         return $request->wantsJson()
                     ? new JsonResponse('', 200)
                     : back()->with('status', 'user-money-updated');
+    }
+
+    /**
+     * Update discount of a user
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function updateDiscount(User $user, Request $request)
+    {
+        Validator::make($request->all(), [
+            'amount' => ['required', 'numeric'],
+        ])->validateWithBag('updateProfileInformation');
+
+        $user->update(['discount' => $request->amount]);
+
+        return $request->wantsJson()
+                    ? new JsonResponse('', 200)
+                    : back()->with('status', 'user-discount-updated');
     }
 }

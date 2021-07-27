@@ -73,7 +73,8 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified'
         Route::get('/', [\App\Http\Controllers\Manager\UsersController::class, 'index'])->name('manager.users');
         Route::get('/{user}/destroy', [\App\Http\Controllers\Manager\UsersController::class, 'destroy'])->name('manager.users.destroy');
         Route::get('/{user}/restore', [\App\Http\Controllers\Manager\UsersController::class, 'restore'])->name('manager.users.restore');
-        Route::put('/{user}/money', [\App\Http\Controllers\Manager\UsersController::class, 'editMoney'])->name('manager.users.money.edit');
+        Route::put('/{user}/money', [\App\Http\Controllers\Manager\UsersController::class, 'updateMoney'])->name('manager.users.money.update');
+        Route::put('/{user}/discount', [\App\Http\Controllers\Manager\UsersController::class, 'updateDiscount'])->name('manager.users.discount.update');
     });
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [\App\Http\Controllers\Manager\SettingsController::class, 'edit'])->name('manager.settings.edit');
