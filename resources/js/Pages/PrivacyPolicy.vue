@@ -6,7 +6,7 @@
                     <jet-authentication-card-logo />
                 </div>
 
-                <div v-html="policy" class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
+                <div v-html="this.$page.props.settings.privacy" class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
                 </div>
             </div>
         </div>
@@ -17,7 +17,6 @@
 import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
 
 export default {
-    props: ['policy'],
 
     components: {
         JetAuthenticationCardLogo,

@@ -49,6 +49,42 @@
             </div>
         </div>
 
+        <!-- Terms Of Service -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="terms" value="Terms Of Service" />
+            <textarea v-if="is_html" class="mt-1 border p-3 overflow-y-scroll max-h-96 w-full" v-model="form.terms" rows="96"/>
+            <jet-editor v-else id="terms" class="mt-1 w-full" v-model="form.terms"/>
+            <div class="flex items-center w-full">
+            <jet-checkbox
+                name="isHtml"
+                id="isHtml"
+                v-model:checked="is_html"
+            />
+            <div class="ml-2">
+                <span v-if="is_html">Switch to editor</span>
+                <span v-else>Switch to plain HTML</span>
+            </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy -->
+        <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+            <jet-label for="privacy" value="Privacy Policy" />
+            <textarea v-if="is_html" class="mt-1 border p-3 overflow-y-scroll max-h-96 w-full" v-model="form.privacy" rows="96"/>
+            <jet-editor v-else id="privacy" class="mt-1 w-full" v-model="form.privacy"/>
+            <div class="flex items-center w-full">
+            <jet-checkbox
+                name="isHtml"
+                id="isHtml"
+                v-model:checked="is_html"
+            />
+            <div class="ml-2">
+                <span v-if="is_html">Switch to editor</span>
+                <span v-else>Switch to plain HTML</span>
+            </div>
+            </div>
+        </div>
+
         <jet-action-message :on="form.recentlySuccessful" class="mr-3">
             Saved.
         </jet-action-message>
@@ -94,7 +130,9 @@
                     token: null,
                     email: null,
                     phone: null,
-                    address: null
+                    address: null,
+                    terms: null,
+                    privacy: null
                 }),
             }
         },
@@ -105,6 +143,8 @@
             this.form.email = this.$page.props.settings.email;
             this.form.phone = this.$page.props.settings.phone;
             this.form.address = this.$page.props.settings.address;
+            this.form.terms = this.$page.props.settings.terms;
+            this.form.privacy = this.$page.props.settings.privacy;
         },
 
         methods: {

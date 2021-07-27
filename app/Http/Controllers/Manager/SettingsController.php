@@ -30,6 +30,8 @@ class SettingsController extends Controller
                 'email' => $settings->where('name', 'email')->first()->value,
                 'phone' => $settings->where('name', 'phone')->first()->value,
                 'address' => $settings->where('name', 'address')->first()->value,
+                'privacy' => $settings->where('name', 'privacy')->first()->value,
+                'terms' => $settings->where('name', 'terms')->first()->value,
             ],
         ]);
     }
@@ -47,6 +49,8 @@ class SettingsController extends Controller
         Validator::make($request->all(), [
             'token' => ['required', 'string'],
             'welcome' => ['required', 'string'],
+            'privacy' => ['required', 'string'],
+            'terms' => ['required', 'string'],
             'email' => ['required', 'email'],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string'],
@@ -64,6 +68,8 @@ class SettingsController extends Controller
         Settings::where('name', 'email')->update(['value' => $request->email]);
         Settings::where('name', 'phone')->update(['value' => $request->phone]);
         Settings::where('name', 'address')->update(['value' => $request->address]);
+        Settings::where('name', 'terms')->update(['value' => $request->terms]);
+        Settings::where('name', 'privacy')->update(['value' => $request->privacy]);
 
         return $request->wantsJson()
                     ? new JsonResponse('', 200)

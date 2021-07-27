@@ -27,6 +27,22 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/terms-of-service', function () {
+    return Inertia::render('TermsOfService', [
+        'settings' => [
+            'terms' => App\Models\Settings::where('name', 'terms')->first()->value
+        ],
+    ]);
+})->name('terms-of-service');
+
+Route::get('/privacy-policy', function () {
+    return Inertia::render('PrivacyPolicy', [
+        'settings' => [
+            'privacy' => App\Models\Settings::where('name', 'privacy')->first()->value
+        ],
+    ]);
+})->name('privacy-policy');
+
 Route::group(['prefix' => 'contact-us'], function () {
     Route::get('/', function () {
         return Inertia::render('ContactUs', [
