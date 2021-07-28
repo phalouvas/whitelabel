@@ -1,7 +1,7 @@
 <template>
   <div class="p-0">
     <div class="grid grid-cols-3">
-      <div class="col-span-2 p-3 m-3">
+      <div class="p-3 m-3">
         <!-- Phone -->
         <jet-label for="to" value="Phone" />
         <vue-tel-input
@@ -12,7 +12,9 @@
           @change="estimateSms"
         />
         <jet-input-error :message="form.errors.to" class="mt-2" />
+      </div>
 
+      <div class="p-3 m-3 border">
         <!-- Message -->
         <jet-label for="message" value="Message" />
         <textarea
@@ -38,10 +40,8 @@
           @change="estimateSms"
         />
         <jet-input-error :message="form.errors.sender_id" class="mt-2" />
-      </div>
 
-      <div class="">
-          <div class="p-3 m-3 bg-gray-200 rounded-md prose">
+        <div class="p-3 m-3 bg-gray-200 rounded-md prose">
               <table class="table-auto">
                   <tbody>
                       <tr>
@@ -65,7 +65,11 @@
                   </tbody>
               </table>
           </div>
-          <div class="p-3 m-3">
+      </div>
+
+      <div class="">
+
+          <div class="p-3 ml-16">
               <phone-preview :content="form.message"></phone-preview>
           </div>
       </div>
@@ -149,7 +153,6 @@ export default {
 
   mounted() {
     this.formReset();
-    this.estimateSms();
   },
 
   methods: {
@@ -183,6 +186,7 @@ export default {
       this.form.estimated_cost = 0;
       this.form.contact_count = 0;
       this.form.invalid_count = 0;
+        this.estimateSms();
     },
 
     onValidateChange(to) {

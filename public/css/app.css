@@ -8012,6 +8012,15 @@ select {
 .mb-1 {
 	margin-bottom: 0.25rem;
 }
+.ml-10 {
+	margin-left: 2.5rem;
+}
+.ml-20 {
+	margin-left: 5rem;
+}
+.ml-16 {
+	margin-left: 4rem;
+}
 .block {
 	display: block;
 }
