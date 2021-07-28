@@ -78,7 +78,7 @@
     <jet-input-error :message="form.errors.smsto_error" class="mt-2" />
 
     <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-      Sent!
+      Sent! It will appear in your reports within the next minute.
     </jet-action-message>
 
     <jet-success-button
