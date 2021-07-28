@@ -43,7 +43,7 @@ class SmsController extends Controller
         $validatedData = Validator::make($request->all(), [
             'cost' => ['required', 'numeric'],
             'phone' => ['required', 'string'],
-        ])->validateWithBag('updateProfileInformation');
+        ])->validateWithBag('estimateSms');
 
         Session::put('sms_estimation', json_encode($validatedData));
 

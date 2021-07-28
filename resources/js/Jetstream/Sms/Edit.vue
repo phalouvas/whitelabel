@@ -1,10 +1,11 @@
 <template>
     <div class="p-6">
 
-        <!-- Api Key -->
+        <!-- Phone -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
             <jet-label for="phone" value="Phone" />
-            <input type="text" ref="phone" class="mt-1 p-3 w-full" v-model="form.phone">
+            <vue-tel-input id="phone" class="mt-1 p-3 w-full" v-model="phone" @validate="onValidateChange"/>
+            <jet-input-error :message="form.errors.phone" class="mt-2" />
         </div>
 
         <jet-action-message :on="form.recentlySuccessful" class="mr-3">
@@ -31,6 +32,8 @@
     import JetSecondaryButton from '@/Jetstream/SecondaryButton'
     import JetEditor from '@/Jetstream/Editor'
     import JetCheckbox from '@/Jetstream/Checkbox'
+    import { VueTelInput } from 'vue-tel-input';
+    import 'vue-tel-input/dist/vue-tel-input.css';
 
     export default {
         components: {
@@ -42,7 +45,8 @@
             JetLabel,
             JetSecondaryButton,
             JetEditor,
-            JetCheckbox
+            JetCheckbox,
+            VueTelInput
         },
 
         data() {
@@ -53,6 +57,7 @@
                     cost: 0,
                     phone: null,
                 }),
+                phone: null
             }
         },
 
@@ -80,6 +85,16 @@
                 });
                 this.processing = false;
             },
+
+            onValidateChange(phone) {
+                if (phone.valid === true) {
+                    this.form.phone = phone.number;
+                    this.form.errors.phone = null;
+                } else {
+                    this.form.phone = null;
+                    this.form.errors.phone = "The Phone field is invalid";
+                }
+            }
 
         },
     }
