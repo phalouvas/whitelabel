@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\EstimateSms;
+use App\Actions\SendSms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -84,9 +85,20 @@ class SmsController extends Controller
         $validatedData = Validator::make($request->all(), [
             'cost' => ['required', 'numeric'],
             'to' => ['required', 'string'],
-        ])->validateWithBag('updateProfileInformation');
+            'message' => ['required', 'string'],
+            'sender_id' => ['required', 'string'],
+        ])->validateWithBag('sendSms');
 
-        //
+        $sendSms = new SendSms();
+        try {
+            $sendSms->send($validatedData);
+        } catch (\Throwable $th) {
+            Validator::make([], [
+                'smsto_error' => ['required'],
+            ], [
+                'required' => $th->getMessage(),
+            ])->validateWithBag('sendSms');
+        }
 
         return $request->wantsJson()
                     ? new JsonResponse('', 200)
