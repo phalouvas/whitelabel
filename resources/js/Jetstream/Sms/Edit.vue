@@ -1,42 +1,74 @@
 <template>
-  <div class="p-6">
-    <div class="p-6 m-6 border col-span-6 sm:col-span-12">
-      <!-- Phone -->
-      <jet-label for="to" value="Phone" />
-      <vue-tel-input
-        id="to"
-        class="mt-1 p-3 w-full"
-        v-model="to"
-        @validate="onValidateChange"
-        @change="estimateSms"
-      />
-      <jet-input-error :message="form.errors.to" class="mt-2" />
+  <div class="p-0">
+    <div class="flex">
+      <div class="flex-auto p-3 m-3">
+        <!-- Phone -->
+        <jet-label for="to" value="Phone" />
+        <vue-tel-input
+          id="to"
+          class="mt-1 p-3 w-full"
+          v-model="to"
+          @validate="onValidateChange"
+          @change="estimateSms"
+        />
+        <jet-input-error :message="form.errors.to" class="mt-2" />
 
-      <!-- Message -->
-      <jet-label for="message" value="Message" />
-      <textarea
-        v-model="form.message"
-        v-on:input="estimate"
-        type="text"
-        class="mt-1 p-3 w-full"
-        id="message"
-        placeholder="Your message here..."
-        rows="6"
-        @change="estimateSms"
-      />
-      <jet-input-error :message="form.errors.message" class="mt-2" />
+        <!-- Message -->
+        <jet-label for="message" value="Message" />
+        <textarea
+          v-model="form.message"
+          v-on:input="estimate"
+          type="text"
+          class="mt-1 p-3 w-full"
+          id="message"
+          placeholder="Your message here..."
+          rows="6"
+          @change="estimateSms"
+        />
+        <jet-input-error :message="form.errors.message" class="mt-2" />
 
-      <!-- Sender ID -->
-      <jet-label for="sender_id" value="Sender ID" />
-      <input
-        type="text"
-        id="sender_id"
-        class="mt-1 p-3 w-full"
-        v-model="form.sender_id"
-        placeholder="Sender ID..."
-        @change="estimateSms"
-      />
-      <jet-input-error :message="form.errors.sender_id" class="mt-2" />
+        <!-- Sender ID -->
+        <jet-label for="sender_id" value="Sender ID" />
+        <input
+          type="text"
+          id="sender_id"
+          class="mt-1 p-3 w-full"
+          v-model="form.sender_id"
+          placeholder="Sender ID..."
+          @change="estimateSms"
+        />
+        <jet-input-error :message="form.errors.sender_id" class="mt-2" />
+      </div>
+
+      <div class="flex-auto">
+          <div class="p-3 m-3 bg-gray-200 rounded-md prose">
+              <table class="table-auto">
+                  <tbody>
+                      <tr>
+                          <td class="uppercase">Messages (parts):</td>
+                          <td class="font-bold text-lg">{{$page.props.sms_estimation.sms_count}}</td>
+                      </tr>
+                     <tr>
+                          <td class="uppercase">ESTIMATED COST:</td>
+                          <td>
+                              <jet-money class="font-bold text-lg" v-if="$page.props.sms_estimation.estimated_cost > 0" :value="$page.props.sms_estimation.estimated_cost"/>
+                              <span v-else class="font-bold text-lg">0</span>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="uppercase">YOUR BALANCE:</td>
+                          <td>
+                              <jet-money class="font-bold text-lg" v-if="$page.props.user.money > 0" :value="$page.props.user.money"/>
+                              <span v-else class="font-bold text-lg">0</span>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="p-3 m-3 border">
+              phone preview
+          </div>
+      </div>
     </div>
 
     <jet-input-error :message="form.errors.smsto_error" class="mt-2" />
@@ -76,6 +108,7 @@ import JetLabel from "@/Jetstream/Label";
 import JetActionMessage from "@/Jetstream/ActionMessage";
 import JetEditor from "@/Jetstream/Editor";
 import JetCheckbox from "@/Jetstream/Checkbox";
+import JetMoney from "@/Jetstream/Money";
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/dist/vue-tel-input.css";
 
@@ -88,7 +121,7 @@ export default {
     JetFormSection,
     JetInput,
     JetInputError,
-    JetLabel,
+    JetLabel, JetMoney,
     JetEditor,
     JetCheckbox,
     VueTelInput,
@@ -103,14 +136,18 @@ export default {
         to: null,
         message: null,
         sender_id: null,
+        sms_count: 0,
+        estimated_cost: 0,
+        contact_count: 0,
+        invalid_count: 0
       }),
       to: null,
     };
   },
 
   mounted() {
-    console.log(this.$page.props.sms_estimation);
-    console.log(this.$page.props.user);
+    this.formReset();
+    this.estimateSms();
   },
 
   methods: {
@@ -140,6 +177,10 @@ export default {
       this.form.to = null;
       this.form.message = null;
       this.form.sender_id = null;
+      this.form.sms_count = 0;
+      this.form.estimated_cost = 0;
+      this.form.contact_count = 0;
+      this.form.invalid_count = 0;
     },
 
     onValidateChange(to) {

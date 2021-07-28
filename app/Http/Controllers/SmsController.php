@@ -25,7 +25,7 @@ class SmsController extends Controller
             'to' => null,
             'message' => null,
             'sender_id' => null,
-            'sms_count' => null,
+            'sms_count' => 0,
             'estimated_cost' => 0,
             'contact_count' => 0,
             'invalid_count' => 0,
@@ -47,6 +47,7 @@ class SmsController extends Controller
      */
     public function estimate(Request $request) {
 
+        Session::remove('sms_estimation');
         $validatedData = Validator::make($request->all(), [
             'cost' => ['required', 'numeric'],
             'to' => ['required', 'string'],
