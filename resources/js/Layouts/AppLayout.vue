@@ -23,6 +23,9 @@
                                 <jet-nav-link :href="route('sms.edit')" :active="route().current('sms.edit')">
                                     Send
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('sms.index')" :active="route().current('sms.index')">
+                                    Reports
+                                </jet-nav-link>
                                 <jet-nav-link :href="route('contact-us')" :active="route().current('contact-us')">
                                     Contact Us
                                 </jet-nav-link>
@@ -156,6 +159,9 @@
                         </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('sms.edit')" :active="route().current('sms.edit')">
                             Send
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('sms.index')" :active="route().current('sms.index')">
+                            Reports
                         </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('contact-us')" :active="route().current('contact-us')">
                             Contact Us

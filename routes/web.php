@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::any('/send', [\App\Http\Controllers\SmsController::class, 'edit'])->name('sms.edit');
+    Route::get('/reports', [\App\Http\Controllers\SmsController::class, 'index'])->name('sms.index');
     Route::put('/sms/estimate', [\App\Http\Controllers\SmsController::class, 'estimate'])->name('sms.estimate');
     Route::put('/sms/send', [\App\Http\Controllers\SmsController::class, 'send'])->name('sms.send');
 });

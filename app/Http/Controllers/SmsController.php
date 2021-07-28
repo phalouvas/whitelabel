@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\EstimateSms;
+use App\Actions\IndexSms;
 use App\Actions\SendSms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -11,6 +12,48 @@ use Inertia\Inertia;
 
 class SmsController extends Controller
 {
+    /**
+     * Get sms logs
+     *
+     * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
+     *
+     * @param Request $request
+     * @see \Inertia\ResponseFactory
+     */
+    public function index(Request $request)
+    {
+        $filter = $request->only(['status', 'to', 'created_at', 'page']);
+
+        $indexSms = new IndexSms();
+        $messages = $indexSms->index($filter);
+
+        //Fix links
+        $pathArray = $request->only(['status', 'to', 'created_at']);
+        $queryString = '';
+        foreach ($pathArray as $key => $value) {
+            $queryString .= '&' . $key . '=' . $value;
+        }
+        $links = $messages['links'];
+        $links[0]['label'] = '&laquo; Previous';
+        $links[count($links) - 1]['label'] = 'Next &raquo;';
+        foreach ($links as $key => $link) {
+
+        }
+        $messages['links'] = $links;
+        foreach ($messages['links'] as $key => $link) {
+            $messages['links'][$key]['url'] = config('app.url') . 'reports' . substr($link['url'], strpos($link['url'], '?page=')) . $queryString;
+        }
+        $messages['first_page_url'] = config('app.url') . 'reports' . substr($messages['first_page_url'], strpos($messages['first_page_url'], '?page=')) . $queryString;
+        $messages['last_page_url'] = config('app.url') . 'reports' . substr($messages['last_page_url'], strpos($messages['last_page_url'], '?page=')) . $queryString;
+        $messages['next_page_url'] = config('app.url') . 'reports' . substr($messages['next_page_url'], strpos($messages['next_page_url'], '?page=')) . $queryString;
+        $messages['prev_page_url'] = config('app.url') . 'reports' . substr($messages['prev_page_url'], strpos($messages['prev_page_url'], '?page=')) . $queryString;
+
+        return Inertia::render('Sms/Index', [
+            'messages' => $messages,
+            'filter' => $filter
+        ]);
+    }
+
     /**
      * Get sms message
      *
