@@ -27774,13 +27774,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       processing: false,
       form: this.$inertia.form({
-        _method: 'PUT',
+        _method: "PUT",
         cost: 0,
-        phone: null,
+        to: null,
         message: null,
         sender_id: null
       }),
-      phone: null
+      to: null
     };
   },
   mounted: function mounted() {
@@ -27792,8 +27792,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.processing = true;
-      this.form.post(route('sms.estimate'), {
-        errorBag: 'estimateSms',
+      this.form.post(route("sms.estimate"), {
+        errorBag: "estimateSms",
         preserveScroll: true,
         onSuccess: function onSuccess() {
           return _this.form.recentlySuccessful = false;
@@ -27805,8 +27805,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.processing = true;
-      this.form.post(route('sms.send'), {
-        errorBag: 'sendSms',
+      this.form.post(route("sms.send"), {
+        errorBag: "sendSms",
         preserveScroll: true,
         onSuccess: function onSuccess() {
           return _this2.formReset();
@@ -27815,20 +27815,20 @@ __webpack_require__.r(__webpack_exports__);
       this.processing = false;
     },
     formReset: function formReset() {
-      this.phone = null;
+      this.to = null;
       this.form.cost = 0;
-      this.form.phone = null;
+      this.form.to = null;
       this.form.message = null;
       this.form.sender_id = null;
     },
-    onValidateChange: function onValidateChange(phone) {
-      if (phone.valid === true) {
-        this.form.phone = phone.number;
-        this.form.errors.phone = null;
+    onValidateChange: function onValidateChange(to) {
+      if (to.valid === true) {
+        this.form.to = to.number;
+        this.form.errors.to = null;
       } else {
-        this.form.phone = null;
+        this.form.to = null;
         this.form.hasErrors = true;
-        this.form.errors.phone = "The Phone field is invalid";
+        this.form.errors.to = "The Phone field is invalid";
       }
     }
   }
@@ -32307,21 +32307,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_secondary_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-secondary-button");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Phone "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "phone",
+    "for": "to",
     value: "Phone"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_tel_input, {
-    id: "phone",
+    id: "to",
     "class": "mt-1 p-3 w-full",
-    modelValue: $data.phone,
+    modelValue: $data.to,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.phone = $event;
+      return $data.to = $event;
     }),
     onValidate: $options.onValidateChange,
     onChange: $options.estimateSms
   }, null, 8
   /* PROPS */
   , ["modelValue", "onValidate", "onChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
-    message: $data.form.errors.phone,
+    message: $data.form.errors.to,
     "class": "mt-2"
   }, null, 8
   /* PROPS */
@@ -32371,7 +32371,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "mt-2"
   }, null, 8
   /* PROPS */
-  , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_action_message, {
+  , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+    message: $data.form.errors.smsto_error,
+    "class": "mt-2"
+  }, null, 8
+  /* PROPS */
+  , ["message"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_action_message, {
     on: $data.form.recentlySuccessful,
     "class": "mr-3"
   }, {

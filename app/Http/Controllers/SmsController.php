@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\EstimateSms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -21,12 +22,16 @@ class SmsController extends Controller
     {
         $sms_estimation_str = Session::get('sms_estimation', null) ?? json_encode([
             'cost' => 0,
-            'phone' => null,
+            'to' => null,
             'message' => null,
-            'sender_id' => null
+            'sender_id' => null,
+            'sms_count' => null,
+            'estimated_cost' => 0,
+            'contact_count' => 0,
+            'invalid_count' => 0,
         ]);
         $sms_estimation = json_decode($sms_estimation_str, true);
-        $sms_estimation['cost'] = $sms_estimation['phone'] * 1;
+        $sms_estimation['cost'] = $sms_estimation['to'] * 1;
         return Inertia::render('Sms/Edit', [
             'sms_estimation' => $sms_estimation
         ]);
@@ -44,12 +49,21 @@ class SmsController extends Controller
 
         $validatedData = Validator::make($request->all(), [
             'cost' => ['required', 'numeric'],
-            'phone' => ['required', 'string'],
+            'to' => ['required', 'string'],
             'message' => ['required', 'string'],
             'sender_id' => ['required', 'string'],
         ])->validateWithBag('estimateSms');
 
-        Session::put('sms_estimation', json_encode($validatedData));
+        $estimateSms = new EstimateSms();
+        try {
+            $estimateSms->estimate($validatedData);
+        } catch (\Throwable $th) {
+            Validator::make([], [
+                'smsto_error' => ['required'],
+            ], [
+                'required' => $th->getMessage(),
+            ])->validateWithBag('estimateSms');
+        }
 
         return $request->wantsJson()
                     ? new JsonResponse('', 200)
@@ -68,7 +82,7 @@ class SmsController extends Controller
 
         $validatedData = Validator::make($request->all(), [
             'cost' => ['required', 'numeric'],
-            'phone' => ['required', 'string'],
+            'to' => ['required', 'string'],
         ])->validateWithBag('updateProfileInformation');
 
         //
