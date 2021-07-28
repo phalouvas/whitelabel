@@ -33,24 +33,25 @@
             Sent!
         </jet-action-message>
 
-        <jet-button :class="{ 'opacity-25': processing }" :disabled="processing || form.hasErrors" @click="sendSms">
-            Send
-        </jet-button>
+        <jet-success-button class="m-1" :class="{ 'opacity-25': processing }" :disabled="processing || form.hasErrors" @click="sendSms">
+            <i class="fas fa-paper-plane"></i> Send
+        </jet-success-button>
 
-        <jet-button :class="{ 'opacity-25': processing }" :disabled="processing" @click="estimateSms">
-            Estimate
-        </jet-button>
+        <jet-secondary-button class="m-1" :class="{ 'opacity-25': processing }" :disabled="processing" @click="estimateSms">
+            <i class="fas fa-calculator"></i> Estimate
+        </jet-secondary-button>
     </div>
 </template>
 
 <script>
     import JetButton from '@/Jetstream/Button'
+    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+    import JetSuccessButton from '@/Jetstream/SuccessButton'
     import JetFormSection from '@/Jetstream/FormSection'
     import JetInput from '@/Jetstream/Input'
     import JetInputError from '@/Jetstream/InputError'
     import JetLabel from '@/Jetstream/Label'
     import JetActionMessage from '@/Jetstream/ActionMessage'
-    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
     import JetEditor from '@/Jetstream/Editor'
     import JetCheckbox from '@/Jetstream/Checkbox'
     import { VueTelInput } from 'vue-tel-input';
@@ -59,12 +60,11 @@
     export default {
         components: {
             JetActionMessage,
-            JetButton,
+            JetButton, JetSuccessButton, JetSecondaryButton,
             JetFormSection,
             JetInput,
             JetInputError,
             JetLabel,
-            JetSecondaryButton,
             JetEditor,
             JetCheckbox,
             VueTelInput
