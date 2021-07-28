@@ -1,18 +1,39 @@
 <template>
     <div class="p-6">
 
-        <!-- Phone -->
         <div class="p-6 m-6 border col-span-6 sm:col-span-12">
+
+            <!-- Phone -->
             <jet-label for="phone" value="Phone" />
-            <vue-tel-input id="phone" class="mt-1 p-3 w-full" v-model="phone" @validate="onValidateChange"/>
+            <vue-tel-input id="phone" class="mt-1 p-3 w-full" v-model="phone" @validate="onValidateChange" @change="estimateSms"/>
             <jet-input-error :message="form.errors.phone" class="mt-2" />
+
+            <!-- Message -->
+            <jet-label for="message" value="Message" />
+            <textarea
+                    v-model="form.message"
+                    v-on:input="estimate"
+                    type="text"
+                    class="mt-1 p-3 w-full"
+                    id="message"
+                    placeholder="Your message here..."
+                    rows="6"
+                    @change="estimateSms"
+                  />
+            <jet-input-error :message="form.errors.message" class="mt-2" />
+
+            <!-- Sender ID -->
+            <jet-label for="sender_id" value="Sender ID" />
+            <input type="text" id="sender_id" class="mt-1 p-3 w-full" v-model="form.sender_id" placeholder="Sender ID..."  @change="estimateSms"/>
+            <jet-input-error :message="form.errors.sender_id" class="mt-2" />
+
         </div>
 
         <jet-action-message :on="form.recentlySuccessful" class="mr-3">
             Sent!
         </jet-action-message>
 
-        <jet-button :class="{ 'opacity-25': processing }" :disabled="processing" @click="sendSms">
+        <jet-button :class="{ 'opacity-25': processing }" :disabled="processing || form.hasErrors" @click="sendSms">
             Send
         </jet-button>
 
@@ -56,6 +77,8 @@
                     _method: 'PUT',
                     cost: 0,
                     phone: null,
+                    message:null,
+                    sender_id: null
                 }),
                 phone: null
             }
@@ -72,6 +95,7 @@
                 this.form.post(route('sms.estimate'), {
                     errorBag: 'estimateSms',
                     preserveScroll: true,
+                    onSuccess: () => (this.form.recentlySuccessful = false),
                 });
                 this.processing = false;
             },
@@ -81,9 +105,17 @@
                 this.form.post(route('sms.send'), {
                     errorBag: 'sendSms',
                     preserveScroll: true,
-                    onSuccess: () => (this.form.reset()),
+                    onSuccess: () => (this.formReset()),
                 });
                 this.processing = false;
+            },
+
+            formReset() {
+                this.phone = null;
+                this.form.cost = 0;
+                this.form.phone = null;
+                this.form.message = null;
+                this.form.sender_id = null;
             },
 
             onValidateChange(phone) {
@@ -92,6 +124,7 @@
                     this.form.errors.phone = null;
                 } else {
                     this.form.phone = null;
+                    this.form.hasErrors = true;
                     this.form.errors.phone = "The Phone field is invalid";
                 }
             }

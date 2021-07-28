@@ -27773,7 +27773,9 @@ __webpack_require__.r(__webpack_exports__);
       form: this.$inertia.form({
         _method: 'PUT',
         cost: 0,
-        phone: null
+        phone: null,
+        message: null,
+        sender_id: null
       }),
       phone: null
     };
@@ -27784,25 +27786,37 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     estimateSms: function estimateSms() {
+      var _this = this;
+
       this.processing = true;
       this.form.post(route('sms.estimate'), {
         errorBag: 'estimateSms',
-        preserveScroll: true
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          return _this.form.recentlySuccessful = false;
+        }
       });
       this.processing = false;
     },
     sendSms: function sendSms() {
-      var _this = this;
+      var _this2 = this;
 
       this.processing = true;
       this.form.post(route('sms.send'), {
         errorBag: 'sendSms',
         preserveScroll: true,
         onSuccess: function onSuccess() {
-          return _this.form.reset();
+          return _this2.formReset();
         }
       });
       this.processing = false;
+    },
+    formReset: function formReset() {
+      this.phone = null;
+      this.form.cost = 0;
+      this.form.phone = null;
+      this.form.message = null;
+      this.form.sender_id = null;
     },
     onValidateChange: function onValidateChange(phone) {
       if (phone.valid === true) {
@@ -27810,6 +27824,7 @@ __webpack_require__.r(__webpack_exports__);
         this.form.errors.phone = null;
       } else {
         this.form.phone = null;
+        this.form.hasErrors = true;
         this.form.errors.phone = "The Phone field is invalid";
       }
     }
@@ -32252,7 +32267,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Phone "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Phone "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "phone",
     value: "Phone"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_tel_input, {
@@ -32262,11 +32277,58 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.phone = $event;
     }),
-    onValidate: $options.onValidateChange
+    onValidate: $options.onValidateChange,
+    onChange: $options.estimateSms
   }, null, 8
   /* PROPS */
-  , ["modelValue", "onValidate"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+  , ["modelValue", "onValidate", "onChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
     message: $data.form.errors.phone,
+    "class": "mt-2"
+  }, null, 8
+  /* PROPS */
+  , ["message"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "message",
+    value: "Message"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.form.message = $event;
+    }),
+    onInput: _cache[3] || (_cache[3] = function () {
+      return _ctx.estimate && _ctx.estimate.apply(_ctx, arguments);
+    }),
+    type: "text",
+    "class": "mt-1 p-3 w-full",
+    id: "message",
+    placeholder: "Your message here...",
+    rows: "6",
+    onChange: _cache[4] || (_cache[4] = function () {
+      return $options.estimateSms && $options.estimateSms.apply($options, arguments);
+    })
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.message]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+    message: $data.form.errors.message,
+    "class": "mt-2"
+  }, null, 8
+  /* PROPS */
+  , ["message"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Sender ID "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "sender_id",
+    value: "Sender ID"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "text",
+    id: "sender_id",
+    "class": "mt-1 p-3 w-full",
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return $data.form.sender_id = $event;
+    }),
+    placeholder: "Sender ID...",
+    onChange: _cache[6] || (_cache[6] = function () {
+      return $options.estimateSms && $options.estimateSms.apply($options, arguments);
+    })
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.sender_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+    message: $data.form.errors.sender_id,
     "class": "mt-2"
   }, null, 8
   /* PROPS */
@@ -32286,7 +32348,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": {
       'opacity-25': $data.processing
     },
-    disabled: $data.processing,
+    disabled: $data.processing || $data.form.hasErrors,
     onClick: $options.sendSms
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

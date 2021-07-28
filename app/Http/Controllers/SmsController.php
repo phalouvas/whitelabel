@@ -21,7 +21,9 @@ class SmsController extends Controller
     {
         $sms_estimation_str = Session::get('sms_estimation', null) ?? json_encode([
             'cost' => 0,
-            'phone' => null
+            'phone' => null,
+            'message' => null,
+            'sender_id' => null
         ]);
         $sms_estimation = json_decode($sms_estimation_str, true);
         $sms_estimation['cost'] = $sms_estimation['phone'] * 1;
@@ -43,13 +45,15 @@ class SmsController extends Controller
         $validatedData = Validator::make($request->all(), [
             'cost' => ['required', 'numeric'],
             'phone' => ['required', 'string'],
+            'message' => ['required', 'string'],
+            'sender_id' => ['required', 'string'],
         ])->validateWithBag('estimateSms');
 
         Session::put('sms_estimation', json_encode($validatedData));
 
         return $request->wantsJson()
                     ? new JsonResponse('', 200)
-                    : back()->with('status', 'sms-sent');
+                    : back()->with('status', 'sms-estimate');
     }
 
     /**
