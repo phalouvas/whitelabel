@@ -61,9 +61,14 @@ Route::group(['prefix' => 'contact-us'], function () {
 
 Route::get('/pricing', [\App\Http\Controllers\GuestController::class, 'countries'])->name('pricing');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    Route::any('/send', [\App\Http\Controllers\SmsController::class, 'edit'])->name('sms.edit');
+    Route::put('/sms/estimate', [\App\Http\Controllers\SmsController::class, 'estimate'])->name('sms.estimate');
+    Route::put('/sms/send', [\App\Http\Controllers\SmsController::class, 'send'])->name('sms.send');
+});
 
 Route::group(['prefix' => 'manager', 'middleware' => ['auth:sanctum', 'verified', 'manager']], function () {
     Route::get('/', function () {
