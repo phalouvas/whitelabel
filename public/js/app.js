@@ -27742,9 +27742,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_Editor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Editor */ "./resources/js/Jetstream/Editor.vue");
 /* harmony import */ var _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Jetstream/Checkbox */ "./resources/js/Jetstream/Checkbox.vue");
 /* harmony import */ var _Jetstream_Money__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Jetstream/Money */ "./resources/js/Jetstream/Money.vue");
-/* harmony import */ var vue_tel_input__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-tel-input */ "./node_modules/vue-tel-input/dist/vue-tel-input.umd.min.js");
-/* harmony import */ var vue_tel_input__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue_tel_input__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var vue_tel_input_dist_vue_tel_input_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-tel-input/dist/vue-tel-input.css */ "./node_modules/vue-tel-input/dist/vue-tel-input.css");
+/* harmony import */ var _Jetstream_Sms_PhonePreview__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/Jetstream/Sms/PhonePreview */ "./resources/js/Jetstream/Sms/PhonePreview.vue");
+/* harmony import */ var vue_tel_input__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-tel-input */ "./node_modules/vue-tel-input/dist/vue-tel-input.umd.min.js");
+/* harmony import */ var vue_tel_input__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_tel_input__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var vue_tel_input_dist_vue_tel_input_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-tel-input/dist/vue-tel-input.css */ "./node_modules/vue-tel-input/dist/vue-tel-input.css");
+
 
 
 
@@ -27771,7 +27773,8 @@ __webpack_require__.r(__webpack_exports__);
     JetMoney: _Jetstream_Money__WEBPACK_IMPORTED_MODULE_10__.default,
     JetEditor: _Jetstream_Editor__WEBPACK_IMPORTED_MODULE_8__.default,
     JetCheckbox: _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_9__.default,
-    VueTelInput: vue_tel_input__WEBPACK_IMPORTED_MODULE_11__.VueTelInput
+    VueTelInput: vue_tel_input__WEBPACK_IMPORTED_MODULE_12__.VueTelInput,
+    PhonePreview: _Jetstream_Sms_PhonePreview__WEBPACK_IMPORTED_MODULE_11__.default
   },
   data: function data() {
     return {
@@ -27841,6 +27844,33 @@ __webpack_require__.r(__webpack_exports__);
         this.form.hasErrors = true;
         this.form.errors.to = "The Phone field is invalid";
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    content: {
+      type: String,
+      required: false
+    }
+  },
+  computed: {
+    preview_style: function preview_style() {
+      return "width: 250px; height: 500px; background-image: url(".concat("https://whitelabel.local.intergo.co/", "/images/PhonePreview.png); background-size: 250px 500px;");
     }
   }
 });
@@ -32283,13 +32313,13 @@ var _hoisted_1 = {
   "class": "p-0"
 };
 var _hoisted_2 = {
-  "class": "flex"
+  "class": "grid grid-cols-3"
 };
 var _hoisted_3 = {
-  "class": "flex-auto p-3 m-3"
+  "class": "col-span-2 p-3 m-3"
 };
 var _hoisted_4 = {
-  "class": "flex-auto"
+  "class": ""
 };
 var _hoisted_5 = {
   "class": "p-3 m-3 bg-gray-200 rounded-md prose"
@@ -32329,12 +32359,9 @@ var _hoisted_12 = {
   key: 1,
   "class": "font-bold text-lg"
 };
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "p-3 m-3 border"
-}, " phone preview ", -1
-/* HOISTED */
-);
+var _hoisted_13 = {
+  "class": "p-3 m-3"
+};
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Sent! ");
 
@@ -32362,6 +32389,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_input_error = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input-error");
 
   var _component_jet_money = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-money");
+
+  var _component_phone_preview = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("phone-preview");
 
   var _component_jet_action_message = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-action-message");
 
@@ -32448,7 +32477,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: _ctx.$page.props.user.money
   }, null, 8
   /* PROPS */
-  , ["value"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_12, "0"))])])])])]), _hoisted_13])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+  , ["value"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_12, "0"))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_phone_preview, {
+    content: $data.form.message
+  }, null, 8
+  /* PROPS */
+  , ["content"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
     message: $data.form.errors.smsto_error,
     "class": "mt-2"
   }, null, 8
@@ -32496,6 +32529,64 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["class", "disabled", "onClick"])]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=template&id=12602dc4":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=template&id=12602dc4 ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "container"
+};
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  style: {
+    "padding-top": "10px",
+    "padding-left": "20px",
+    "padding-right": "20px"
+  }
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_3 = {
+  style: {
+    "margin-top": "60px",
+    "margin-left": "25px",
+    "margin-right": "25px",
+    "border-radius": "10px",
+    "background-color": "#E2F2F2",
+    "white-space": "pre-line"
+  }
+};
+var _hoisted_4 = {
+  style: {
+    "padding-top": "10px",
+    "padding-left": "10px",
+    "padding-right": "10px",
+    "font-size": "85%",
+    "font-style": "italic"
+  }
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+    style: $options.preview_style
+  }, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.content), 1
+  /* TEXT */
+  )])], 4
+  /* STYLE */
+  )]);
 }
 
 /***/ }),
@@ -79418,6 +79509,32 @@ _Edit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = 
 
 /***/ }),
 
+/***/ "./resources/js/Jetstream/Sms/PhonePreview.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/Jetstream/Sms/PhonePreview.vue ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PhonePreview_vue_vue_type_template_id_12602dc4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PhonePreview.vue?vue&type=template&id=12602dc4 */ "./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=template&id=12602dc4");
+/* harmony import */ var _PhonePreview_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PhonePreview.vue?vue&type=script&lang=js */ "./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=script&lang=js");
+
+
+
+_PhonePreview_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _PhonePreview_vue_vue_type_template_id_12602dc4__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_PhonePreview_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/Jetstream/Sms/PhonePreview.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_PhonePreview_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
 /***/ "./resources/js/Jetstream/SuccessButton.vue":
 /*!**************************************************!*\
   !*** ./resources/js/Jetstream/SuccessButton.vue ***!
@@ -80759,6 +80876,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=script&lang=js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PhonePreview_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PhonePreview_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PhonePreview.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Jetstream/SuccessButton.vue?vue&type=script&lang=js":
 /*!**************************************************************************!*\
   !*** ./resources/js/Jetstream/SuccessButton.vue?vue&type=script&lang=js ***!
@@ -81859,6 +81992,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Edit_vue_vue_type_template_id_66363f54__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Edit_vue_vue_type_template_id_66363f54__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Edit.vue?vue&type=template&id=66363f54 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/Edit.vue?vue&type=template&id=66363f54");
+
+
+/***/ }),
+
+/***/ "./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=template&id=12602dc4":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=template&id=12602dc4 ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PhonePreview_vue_vue_type_template_id_12602dc4__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PhonePreview_vue_vue_type_template_id_12602dc4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PhonePreview.vue?vue&type=template&id=12602dc4 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/Sms/PhonePreview.vue?vue&type=template&id=12602dc4");
 
 
 /***/ }),

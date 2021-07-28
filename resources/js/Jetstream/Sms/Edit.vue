@@ -1,7 +1,7 @@
 <template>
   <div class="p-0">
-    <div class="flex">
-      <div class="flex-auto p-3 m-3">
+    <div class="grid grid-cols-3">
+      <div class="col-span-2 p-3 m-3">
         <!-- Phone -->
         <jet-label for="to" value="Phone" />
         <vue-tel-input
@@ -40,7 +40,7 @@
         <jet-input-error :message="form.errors.sender_id" class="mt-2" />
       </div>
 
-      <div class="flex-auto">
+      <div class="">
           <div class="p-3 m-3 bg-gray-200 rounded-md prose">
               <table class="table-auto">
                   <tbody>
@@ -65,8 +65,8 @@
                   </tbody>
               </table>
           </div>
-          <div class="p-3 m-3 border">
-              phone preview
+          <div class="p-3 m-3">
+              <phone-preview :content="form.message"></phone-preview>
           </div>
       </div>
     </div>
@@ -109,6 +109,7 @@ import JetActionMessage from "@/Jetstream/ActionMessage";
 import JetEditor from "@/Jetstream/Editor";
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetMoney from "@/Jetstream/Money";
+import PhonePreview from "@/Jetstream/Sms/PhonePreview"
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/dist/vue-tel-input.css";
 
@@ -125,6 +126,7 @@ export default {
     JetEditor,
     JetCheckbox,
     VueTelInput,
+    PhonePreview
   },
 
   data() {
