@@ -27781,7 +27781,6 @@ __webpack_require__.r(__webpack_exports__);
       processing: false,
       form: this.$inertia.form({
         _method: "PUT",
-        cost: 0,
         to: null,
         message: null,
         sender_id: null,
@@ -27814,6 +27813,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.processing = true;
+      this.formSet();
       this.form.post(route("sms.send"), {
         errorBag: "sendSms",
         preserveScroll: true,
@@ -27823,9 +27823,14 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.processing = false;
     },
+    formSet: function formSet() {
+      this.form.sms_count = this.$page.props.sms_estimation.sms_count;
+      this.form.estimated_cost = this.$page.props.sms_estimation.estimated_cost;
+      this.form.contact_count = this.$page.props.sms_estimation.contact_count;
+      this.form.invalid_count = this.$page.props.sms_estimation.invalid_count;
+    },
     formReset: function formReset() {
       this.to = null;
-      this.form.cost = 0;
       this.form.to = null;
       this.form.message = null;
       this.form.sender_id = null;

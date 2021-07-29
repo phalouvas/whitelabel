@@ -65,7 +65,6 @@ class SmsController extends Controller
     public function edit()
     {
         $sms_estimation_str = Session::get('sms_estimation', null) ?? json_encode([
-            'cost' => 0,
             'to' => null,
             'message' => null,
             'sender_id' => null,
@@ -93,10 +92,13 @@ class SmsController extends Controller
 
         Session::remove('sms_estimation');
         $validatedData = Validator::make($request->all(), [
-            'cost' => ['required', 'numeric'],
             'to' => ['required', 'string'],
             'message' => ['required', 'string'],
             'sender_id' => ['required', 'string'],
+            'sms_count' => ['required', 'numeric'],
+            'estimated_cost' => ['required', 'numeric'],
+            'contact_count' => ['required', 'numeric'],
+            'invalid_count' => ['required', 'numeric'],
         ])->validateWithBag('estimateSms');
 
         $estimateSms = new EstimateSms();
@@ -126,15 +128,19 @@ class SmsController extends Controller
     public function send(Request $request) {
 
         $validatedData = Validator::make($request->all(), [
-            'cost' => ['required', 'numeric'],
+            'estimated_cost' => ['required', 'numeric'],
             'to' => ['required', 'string'],
             'message' => ['required', 'string'],
             'sender_id' => ['required', 'string'],
+            'sms_count' => ['required', 'numeric'],
+            'estimated_cost' => ['required', 'numeric'],
+            'contact_count' => ['required', 'numeric'],
+            'invalid_count' => ['required', 'numeric'],
         ])->validateWithBag('sendSms');
 
         $sendSms = new SendSms();
         try {
-            $sendSms->send($validatedData);
+            $sendSms->send($validatedData, $request->user());
         } catch (\Throwable $th) {
             Validator::make([], [
                 'smsto_error' => ['required'],

@@ -2,6 +2,8 @@
 
 namespace App\Contacts;
 
+use App\Models\User;
+
 interface SendSms
 {
     /**
@@ -10,7 +12,8 @@ interface SendSms
      * @author Panayiotis Halouvas <phalouvas@kainotomo.com>
      *
      * @param  array $sms
+     * @param User $user
      * @return void
      */
-    public function send(array $sms);
+    public function send(array $sms, User $user);
 }

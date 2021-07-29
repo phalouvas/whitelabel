@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Contacts\SendSms as ContactsSendSms;
 use App\Models\Settings;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
@@ -20,8 +21,9 @@ class SendSms implements ContactsSendSms
      * @return array
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function send(array $sms)
+    public function send(array $sms, User $user)
     {
+        $user->decrement('money', $sms['estimated_cost']);
         if (Session::has('smsto_token')) {
             $token = Session::get('smsto_token');
         } else {

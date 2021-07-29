@@ -42,36 +42,45 @@
         <jet-input-error :message="form.errors.sender_id" class="mt-2" />
 
         <div class="p-3 m-3 bg-gray-200 rounded-md prose">
-              <table class="table-auto">
-                  <tbody>
-                      <tr>
-                          <td class="uppercase">Messages (parts):</td>
-                          <td class="font-bold text-lg">{{$page.props.sms_estimation.sms_count}}</td>
-                      </tr>
-                     <tr>
-                          <td class="uppercase">ESTIMATED COST:</td>
-                          <td>
-                              <jet-money class="font-bold text-lg" v-if="$page.props.sms_estimation.estimated_cost > 0" :value="$page.props.sms_estimation.estimated_cost"/>
-                              <span v-else class="font-bold text-lg">0</span>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td class="uppercase">YOUR BALANCE:</td>
-                          <td>
-                              <jet-money class="font-bold text-lg" v-if="$page.props.user.money > 0" :value="$page.props.user.money"/>
-                              <span v-else class="font-bold text-lg">0</span>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+          <table class="table-auto">
+            <tbody>
+              <tr>
+                <td class="uppercase">Messages (parts):</td>
+                <td class="font-bold text-lg">
+                  {{ $page.props.sms_estimation.sms_count }}
+                </td>
+              </tr>
+              <tr>
+                <td class="uppercase">ESTIMATED COST:</td>
+                <td>
+                  <jet-money
+                    class="font-bold text-lg"
+                    v-if="$page.props.sms_estimation.estimated_cost > 0"
+                    :value="$page.props.sms_estimation.estimated_cost"
+                  />
+                  <span v-else class="font-bold text-lg">0</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="uppercase">YOUR BALANCE:</td>
+                <td>
+                  <jet-money
+                    class="font-bold text-lg"
+                    v-if="$page.props.user.money > 0"
+                    :value="$page.props.user.money"
+                  />
+                  <span v-else class="font-bold text-lg">0</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="">
-
-          <div class="p-3 ml-16">
-              <phone-preview :content="form.message"></phone-preview>
-          </div>
+        <div class="p-3 ml-16">
+          <phone-preview :content="form.message"></phone-preview>
+        </div>
       </div>
     </div>
 
@@ -113,7 +122,7 @@ import JetActionMessage from "@/Jetstream/ActionMessage";
 import JetEditor from "@/Jetstream/Editor";
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetMoney from "@/Jetstream/Money";
-import PhonePreview from "@/Jetstream/Sms/PhonePreview"
+import PhonePreview from "@/Jetstream/Sms/PhonePreview";
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/dist/vue-tel-input.css";
 
@@ -126,11 +135,12 @@ export default {
     JetFormSection,
     JetInput,
     JetInputError,
-    JetLabel, JetMoney,
+    JetLabel,
+    JetMoney,
     JetEditor,
     JetCheckbox,
     VueTelInput,
-    PhonePreview
+    PhonePreview,
   },
 
   data() {
@@ -138,14 +148,13 @@ export default {
       processing: false,
       form: this.$inertia.form({
         _method: "PUT",
-        cost: 0,
         to: null,
         message: null,
         sender_id: null,
         sms_count: 0,
         estimated_cost: 0,
         contact_count: 0,
-        invalid_count: 0
+        invalid_count: 0,
       }),
       to: null,
     };
@@ -168,6 +177,7 @@ export default {
 
     sendSms() {
       this.processing = true;
+      this.formSet();
       this.form.post(route("sms.send"), {
         errorBag: "sendSms",
         preserveScroll: true,
@@ -176,9 +186,15 @@ export default {
       this.processing = false;
     },
 
+    formSet() {
+      this.form.sms_count = this.$page.props.sms_estimation.sms_count;
+      this.form.estimated_cost = this.$page.props.sms_estimation.estimated_cost;
+      this.form.contact_count = this.$page.props.sms_estimation.contact_count;
+      this.form.invalid_count = this.$page.props.sms_estimation.invalid_count;
+    },
+
     formReset() {
       this.to = null;
-      this.form.cost = 0;
       this.form.to = null;
       this.form.message = null;
       this.form.sender_id = null;
@@ -186,7 +202,7 @@ export default {
       this.form.estimated_cost = 0;
       this.form.contact_count = 0;
       this.form.invalid_count = 0;
-        this.estimateSms();
+      this.estimateSms();
     },
 
     onValidateChange(to) {
